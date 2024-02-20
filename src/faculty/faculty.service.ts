@@ -8,7 +8,7 @@ export class FacultyService {
   constructor(@InjectRepository(Faculty) private repo: Repository<Faculty>) {}
 
   findAll() {
-    return `This action returns all faculty`;
+    return this.repo.find({ relations: { lecturers: false } });
   }
 
   findOne(id: string) {

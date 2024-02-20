@@ -17,7 +17,7 @@ export class Faculty {
   @Field({ nullable: true })
   full_name: string;
 
-  @OneToMany(() => Lecturer, (lecturer) => lecturer.faculty, { eager: true })
+  @OneToMany(() => Lecturer, (lecturer) => lecturer.faculty)
   @Field(() => [Lecturer], { nullable: true })
   lecturers: Lecturer[];
 }

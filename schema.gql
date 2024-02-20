@@ -15,16 +15,20 @@ type Faculty {
 }
 
 type Lecturer {
-  birth_date: DateTime!
+  birth_date: DateTime
   display_name: String!
-  faculty: Faculty!
-  learning_position: String!
+  faculty: Faculty
+  learning_position: String
   lecturer_id: String!
-  mscb: String!
-  username: String!
+  mscb: Int!
+  username: String
 }
 
 type Query {
+  """List all faculty available"""
+  faculties: [Faculty!]!
+
+  """Get detail information of a faculty and its lecturer list"""
   faculty(id: String!): Faculty!
   lecturer(id: String!): Lecturer!
   lecturers: [Lecturer!]!

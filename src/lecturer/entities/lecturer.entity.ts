@@ -1,4 +1,4 @@
-import { ObjectType, Field } from '@nestjs/graphql';
+import { ObjectType, Field, Int } from '@nestjs/graphql';
 import { Faculty } from 'src/faculty/entities/faculty.entity';
 import { Entity, Column, ManyToOne, PrimaryColumn, JoinColumn } from 'typeorm';
 
@@ -14,23 +14,23 @@ export class Lecturer {
   display_name: string;
 
   @Column()
-  @Field()
+  @Field(() => Int)
   mscb: string;
 
   @ManyToOne(() => Faculty, (faculty) => faculty.lecturers)
   @JoinColumn({ name: 'faculty_id' })
-  @Field(() => Faculty)
+  @Field(() => Faculty, { nullable: true })
   faculty: Faculty;
 
   @Column()
-  @Field()
+  @Field({ nullable: true })
   username: string;
 
   @Column()
-  @Field()
+  @Field({ nullable: true })
   learning_position: string;
 
   @Column()
-  @Field()
+  @Field({ nullable: true })
   birth_date: Date;
 }
