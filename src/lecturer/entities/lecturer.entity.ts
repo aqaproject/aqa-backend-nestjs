@@ -10,12 +10,16 @@ export class Lecturer {
   lecturer_id: string;
 
   @Column()
-  @Field()
+  @Field({ nullable: true })
   display_name: string;
 
   @Column()
-  @Field(() => Int)
+  @Field(() => Int, { nullable: true })
   mscb: string;
+
+  @Column()
+  @Field({ nullable: true })
+  faculty_id: string;
 
   @ManyToOne(() => Faculty, (faculty) => faculty.lecturers)
   @JoinColumn({ name: 'faculty_id' })
@@ -33,4 +37,28 @@ export class Lecturer {
   @Column()
   @Field({ nullable: true })
   birth_date: Date;
+
+  @Column()
+  @Field(() => Boolean, { nullable: true })
+  gender: boolean;
+
+  @Column()
+  @Field({ nullable: true })
+  learning: string;
+
+  @Column()
+  @Field({ nullable: true })
+  email: string;
+
+  @Column()
+  @Field({ nullable: true })
+  phone: string;
+
+  @Column()
+  @Field({ nullable: true })
+  ngach: string;
+
+  @Column()
+  @Field({ nullable: true })
+  position: string;
 }

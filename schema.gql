@@ -16,12 +16,33 @@ type Faculty {
 
 type Lecturer {
   birth_date: DateTime
-  display_name: String!
+  display_name: String
+  email: String
   faculty: Faculty
+  faculty_id: String
+  gender: Boolean
+  learning: String
   learning_position: String
   lecturer_id: String!
-  mscb: Int!
+  mscb: Int
+  ngach: String
+  phone: String
+  position: String
   username: String
+}
+
+type PaginatedLecturer {
+  data: [Lecturer!]!
+  meta: PaginatedMetaData!
+}
+
+type PaginatedMetaData {
+  hasNext: Boolean!
+  hasPrev: Boolean!
+  page: Int!
+  size: Int!
+  total_item: Int!
+  total_page: Int!
 }
 
 type Query {
@@ -30,6 +51,10 @@ type Query {
 
   """Get detail information of a faculty and its lecturer list"""
   faculty(id: String!): Faculty!
+
+  """View detail information of a specific lecturer"""
   lecturer(id: String!): Lecturer!
-  lecturers: [Lecturer!]!
+
+  """List all lecturer"""
+  lecturers(faculty_id: String, keyword: String, page: Int! = 0, program: String, semester_id: String, size: Int! = 10): PaginatedLecturer!
 }
