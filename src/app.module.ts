@@ -9,6 +9,7 @@ import { AppService } from './app.service';
 import { FacultyModule } from './faculty/faculty.module';
 import { LecturerModule } from './lecturer/lecturer.module';
 import { SemesterModule } from './semester/semester.module';
+import { ClassModule } from './class/class.module';
 
 @Module({
   imports: [
@@ -31,6 +32,7 @@ import { SemesterModule } from './semester/semester.module';
     FacultyModule,
     LecturerModule,
     SemesterModule,
+    ClassModule,
   ],
   controllers: [AppController],
   providers: [AppService],

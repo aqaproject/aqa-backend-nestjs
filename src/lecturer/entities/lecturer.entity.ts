@@ -1,6 +1,14 @@
 import { ObjectType, Field, Int } from '@nestjs/graphql';
+import { Class } from 'src/class/entities/class.entity';
 import { Faculty } from 'src/faculty/entities/faculty.entity';
-import { Entity, Column, ManyToOne, PrimaryColumn, JoinColumn } from 'typeorm';
+import {
+  Entity,
+  Column,
+  ManyToOne,
+  PrimaryColumn,
+  JoinColumn,
+  OneToMany,
+} from 'typeorm';
 
 @ObjectType()
 @Entity()
@@ -61,4 +69,8 @@ export class Lecturer {
   @Column()
   @Field({ nullable: true })
   position: string;
+
+  @OneToMany(() => Class, (class_) => class_.lecturer)
+  @Field(() => [Class], { nullable: true })
+  classes: Class[];
 }

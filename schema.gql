@@ -2,6 +2,18 @@
 # THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
 # ------------------------------------------------------
 
+type Class {
+  class_id: String!
+  class_type: String!
+  display_name: String!
+  lecturer: Lecturer
+  participating_student: Int!
+  program: String!
+  semester: Semester!
+  subject_id: String!
+  total_student: Int!
+}
+
 """
 A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date-time format.
 """
@@ -16,6 +28,7 @@ type Faculty {
 
 type Lecturer {
   birth_date: DateTime
+  classes: [Class!]
   display_name: String
   email: String
   faculty: Faculty
@@ -29,6 +42,11 @@ type Lecturer {
   phone: String
   position: String
   username: String
+}
+
+type PaginatedClass {
+  data: [Class!]!
+  meta: PaginatedMetaData!
 }
 
 type PaginatedFaculty {
@@ -51,6 +69,12 @@ type PaginatedMetaData {
 }
 
 type Query {
+  """View particular class information"""
+  class(id: String!): Class!
+
+  """List all classes"""
+  classes(faculty_id: String, keyword: String = "", page: Int = 0, program: String, semester_id: String, size: Int = 10): PaginatedClass!
+
   """List all faculty available"""
   faculties(faculty_id: String, keyword: String = "", page: Int = 0, program: String, semester_id: String, size: Int = 10): PaginatedFaculty!
 
