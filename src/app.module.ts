@@ -8,6 +8,7 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { FacultyModule } from './faculty/faculty.module';
 import { LecturerModule } from './lecturer/lecturer.module';
+import { SemesterModule } from './semester/semester.module';
 
 @Module({
   imports: [
@@ -29,6 +30,7 @@ import { LecturerModule } from './lecturer/lecturer.module';
     }),
     FacultyModule,
     LecturerModule,
+    SemesterModule,
   ],
   controllers: [AppController],
   providers: [AppService],
