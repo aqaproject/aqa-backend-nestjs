@@ -11,7 +11,7 @@ export class FilterArgs {
   @Field({ nullable: true })
   program: string;
 
-  @Field({ nullable: true })
+  @Field({ nullable: true, defaultValue: '' })
   keyword: string;
 
   //   @Field(() => Boolean, { nullable: true, defaultValue: false })

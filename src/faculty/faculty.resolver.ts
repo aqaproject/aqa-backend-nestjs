@@ -1,17 +1,20 @@
 import { Args, Query, Resolver } from '@nestjs/graphql';
 import { Faculty } from './entities/faculty.entity';
 import { FacultyService } from './faculty.service';
+import { PaginatedFaculty } from './dto/PaginatedFaculty';
+import { PaginationArgs } from 'src/common/args/pagination.arg';
+import { FilterArgs } from 'src/common/args/filter.arg';
 
 @Resolver(() => Faculty)
 export class FacultyResolver {
   constructor(private readonly facultyService: FacultyService) {}
 
-  @Query(() => [Faculty], {
+  @Query(() => PaginatedFaculty, {
     name: 'faculties',
     description: 'List all faculty available',
   })
-  findAll() {
-    return this.facultyService.findAll();
+  findAll(@Args() filter: FilterArgs, @Args() pagination: PaginationArgs) {
+    return this.facultyService.findAll(filter, pagination);
   }
 
   @Query(() => Faculty, {

@@ -31,6 +31,11 @@ type Lecturer {
   username: String
 }
 
+type PaginatedFaculty {
+  data: [Faculty!]!
+  meta: PaginatedMetaData!
+}
+
 type PaginatedLecturer {
   data: [Lecturer!]!
   meta: PaginatedMetaData!
@@ -47,7 +52,7 @@ type PaginatedMetaData {
 
 type Query {
   """List all faculty available"""
-  faculties: [Faculty!]!
+  faculties(faculty_id: String, keyword: String = "", page: Int = 0, program: String, semester_id: String, size: Int = 10): PaginatedFaculty!
 
   """Get detail information of a faculty and its lecturer list"""
   faculty(id: String!): Faculty!
@@ -56,5 +61,5 @@ type Query {
   lecturer(id: String!): Lecturer!
 
   """List all lecturer"""
-  lecturers(faculty_id: String, keyword: String, page: Int! = 0, program: String, semester_id: String, size: Int! = 10): PaginatedLecturer!
+  lecturers(faculty_id: String, keyword: String = "", page: Int = 0, program: String, semester_id: String, size: Int = 10): PaginatedLecturer!
 }
