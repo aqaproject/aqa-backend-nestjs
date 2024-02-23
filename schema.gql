@@ -68,6 +68,10 @@ type PaginatedMetaData {
   total_page: Int!
 }
 
+type Program {
+  program: String!
+}
+
 type Query {
   """View particular class information"""
   class(id: String!): Class!
@@ -86,6 +90,7 @@ type Query {
 
   """List all lecturer"""
   lecturers(faculty_id: String, keyword: String = "", page: Int = 0, program: String, semester_id: String, size: Int = 10): PaginatedLecturer!
+  programs: [Program!]!
 
   """List all semester"""
   semesters: [Semester!]!
