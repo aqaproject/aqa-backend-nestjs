@@ -13,14 +13,14 @@ export class ClassService {
   async findAll(filter: FilterArgs, paginationOptions: PaginationArgs) {
     return paginate(this.repo, paginationOptions, {
       where: { display_name: ILike(`%${filter.keyword}%`) },
-      relations: { lecturer: true, semester: true },
+      relations: { lecturer: true, semester: true, subject: true },
     });
   }
 
   findOne(id: string): Promise<Class> {
     return this.repo.findOne({
       where: { class_id: id },
-      relations: { lecturer: true, semester: true },
+      relations: { lecturer: true, semester: true, subject: true },
     });
   }
 }

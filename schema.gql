@@ -10,7 +10,7 @@ type Class {
   participating_student: Int!
   program: String!
   semester: Semester!
-  subject_id: String!
+  subject: Subject
   total_student: Int!
 }
 
