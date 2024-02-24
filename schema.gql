@@ -24,6 +24,7 @@ type Faculty {
   faculty_id: String!
   full_name: String
   lecturers: [Lecturer!]
+  subjects: [Subject!]
 }
 
 type Lecturer {
@@ -68,6 +69,11 @@ type PaginatedMetaData {
   total_page: Int!
 }
 
+type PaginatedSubject {
+  data: [Subject!]!
+  meta: PaginatedMetaData!
+}
+
 type Program {
   program: String!
 }
@@ -94,6 +100,8 @@ type Query {
 
   """List all semester"""
   semesters: [Semester!]!
+  subject(id: String!): Subject!
+  subjects(faculty_id: String, keyword: String = "", page: Int = 0, program: String, semester_id: String, size: Int = 10): PaginatedSubject!
 }
 
 type Semester {
@@ -101,4 +109,10 @@ type Semester {
   semester_id: String!
   type: String!
   year: String!
+}
+
+type Subject {
+  display_name: String!
+  faculty: Faculty!
+  subject_id: String!
 }

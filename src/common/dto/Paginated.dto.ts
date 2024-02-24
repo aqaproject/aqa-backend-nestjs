@@ -20,3 +20,9 @@ export function Paginated<M>(T: Type<M>) {
 
   return _Paginated<M>;
 }
+
+@ObjectType()
+export class IPaginated<M> {
+  data: M[];
+  meta: PaginatedMetaData;
+}

@@ -1,5 +1,6 @@
 import { Field, ObjectType } from '@nestjs/graphql';
 import { Lecturer } from 'src/lecturer/entities/lecturer.entity';
+import { Subject } from 'src/subject/entities/subject.entity';
 import { Column, Entity, OneToMany, PrimaryColumn } from 'typeorm';
 
 @ObjectType()
@@ -20,4 +21,8 @@ export class Faculty {
   @OneToMany(() => Lecturer, (lecturer) => lecturer.faculty)
   @Field(() => [Lecturer], { nullable: true })
   lecturers: Lecturer[];
+
+  @OneToMany(() => Subject, (subject) => subject.faculty)
+  @Field(() => [Subject], { nullable: true })
+  subjects: Subject[];
 }

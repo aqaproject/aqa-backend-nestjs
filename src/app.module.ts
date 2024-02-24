@@ -11,6 +11,7 @@ import { LecturerModule } from './lecturer/lecturer.module';
 import { SemesterModule } from './semester/semester.module';
 import { ClassModule } from './class/class.module';
 import { ProgramModule } from './program/program.module';
+import { SubjectModule } from './subject/subject.module';
 
 @Module({
   imports: [
@@ -35,6 +36,7 @@ import { ProgramModule } from './program/program.module';
     SemesterModule,
     ClassModule,
     ProgramModule,
+    SubjectModule,
   ],
   controllers: [AppController],
   providers: [AppService],
