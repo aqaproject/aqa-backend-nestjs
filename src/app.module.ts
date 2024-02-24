@@ -12,6 +12,7 @@ import { SemesterModule } from './semester/semester.module';
 import { ClassModule } from './class/class.module';
 import { ProgramModule } from './program/program.module';
 import { SubjectModule } from './subject/subject.module';
+import { CriteriaModule } from './criteria/criteria.module';
 
 @Module({
   imports: [
@@ -37,6 +38,7 @@ import { SubjectModule } from './subject/subject.module';
     ClassModule,
     ProgramModule,
     SubjectModule,
+    CriteriaModule,
   ],
   controllers: [AppController],
   providers: [AppService],

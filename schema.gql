@@ -14,6 +14,13 @@ type Class {
   total_student: Int!
 }
 
+type Criteria {
+  criteria_id: String!
+  display_name: String!
+  index: Int
+  semester: Semester
+}
+
 """
 A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date-time format.
 """
@@ -47,6 +54,11 @@ type Lecturer {
 
 type PaginatedClass {
   data: [Class!]!
+  meta: PaginatedMetaData!
+}
+
+type PaginatedCriteria {
+  data: [Criteria!]!
   meta: PaginatedMetaData!
 }
 
@@ -84,6 +96,8 @@ type Query {
 
   """List all classes"""
   classes(faculty_id: String, keyword: String = "", page: Int = 0, program: String, semester_id: String, size: Int = 10): PaginatedClass!
+  criteria(faculty_id: String, keyword: String = "", page: Int = 0, program: String, semester_id: String, size: Int = 10): PaginatedCriteria!
+  criterion(id: String!): Criteria!
 
   """List all faculty available"""
   faculties(faculty_id: String, keyword: String = "", page: Int = 0, program: String, semester_id: String, size: Int = 10): PaginatedFaculty!
