@@ -1,12 +1,15 @@
-import { FindManyOptions, Repository } from 'typeorm';
+import { FindManyOptions, Repository, SelectQueryBuilder } from 'typeorm';
 import { PaginationArgs } from '../args/pagination.arg';
 import { PaginatedMetaData } from '../dto/PaginatedMeta';
+import { FilterArgs } from '../args/filter.arg';
+
+type PaginatedData<T> = Promise<{ data: T[]; meta: PaginatedMetaData }>;
 
 export async function paginate<T>(
   repo: Repository<T>,
   paginationOptions: PaginationArgs,
   options: FindManyOptions<T>,
-) {
+): PaginatedData<T> {
   const [data, count] = await repo.findAndCount({
     take: paginationOptions.size,
     skip: paginationOptions.page * paginationOptions.size,
@@ -16,9 +19,18 @@ export async function paginate<T>(
   return { data, meta: new PaginatedMetaData(paginationOptions, count) };
 }
 
-// export async function paginateWithQuery<T>(
-//   query: SelectQueryBuilder<T>,
-//   paginationOptions: PaginationArgs,
-// ) {
-//   return {};
-// }
+export async function paginateByQuery<T>(
+  query: SelectQueryBuilder<T>,
+  paginationOptions: PaginationArgs,
+  filter: FilterArgs,
+  options: FindManyOptions<T>,
+): PaginatedData<T> {
+  const [data, count] = await query
+    .take(paginationOptions.size)
+    .skip(paginationOptions.page * paginationOptions.size)
+    .setFindOptions(options)
+    .setParameters(filter)
+    .getManyAndCount();
+
+  return { data, meta: new PaginatedMetaData(paginationOptions, count) };
+}

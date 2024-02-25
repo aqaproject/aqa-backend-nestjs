@@ -96,8 +96,8 @@ type Query {
 
   """List all classes"""
   classes(faculty_id: String, keyword: String = "", page: Int = 0, program: String, semester_id: String, size: Int = 10): PaginatedClass!
-  criteria(faculty_id: String, keyword: String = "", page: Int = 0, program: String, semester_id: String, size: Int = 10): PaginatedCriteria!
-  criterion(id: String!): Criteria!
+  criteria(id: String!): Criteria!
+  criterias(faculty_id: String, keyword: String = "", page: Int = 0, program: String, semester_id: String, size: Int = 10): PaginatedCriteria!
 
   """List all faculty available"""
   faculties(faculty_id: String, keyword: String = "", page: Int = 0, program: String, semester_id: String, size: Int = 10): PaginatedFaculty!

@@ -1,5 +1,7 @@
+import { FilterArgs } from '../args/filter.arg';
+
 export function searchString(
-  keyword: string,
+  filter: FilterArgs,
   matchCase = false,
   matchWholeWord = false,
 ) {
@@ -7,6 +9,6 @@ export function searchString(
   } else if (!matchCase && matchWholeWord) {
   } else if (matchCase && matchWholeWord) {
   } else {
-    return `%${keyword}%`;
+    return "unaccent(Criteria.display_name) ilike ('%' || unaccent(:keyword) || '%')";
   }
 }
