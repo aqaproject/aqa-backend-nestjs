@@ -13,7 +13,7 @@ export class CriteriaService {
 
   async findAll(filter: FilterArgs, paginationOptions: PaginationArgs) {
     return paginateByQuery(
-      this.repo.createQueryBuilder().where(searchString(filter)),
+      this.repo.createQueryBuilder().where(searchString('Criteria', filter)),
       paginationOptions,
       filter,
       {

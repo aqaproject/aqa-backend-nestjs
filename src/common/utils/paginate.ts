@@ -25,12 +25,15 @@ export async function paginateByQuery<T>(
   filter: FilterArgs,
   options: FindManyOptions<T>,
 ): PaginatedData<T> {
-  const [data, count] = await query
+  const querySql = query
     .take(paginationOptions.size)
     .skip(paginationOptions.page * paginationOptions.size)
     .setFindOptions(options)
-    .setParameters(filter)
-    .getManyAndCount();
+    .setParameters(filter);
+
+  console.log({ sql: querySql.getSql() });
+
+  const [data, count] = await querySql.getManyAndCount();
 
   return { data, meta: new PaginatedMetaData(paginationOptions, count) };
 }
