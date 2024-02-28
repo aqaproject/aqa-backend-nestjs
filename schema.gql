@@ -127,6 +127,6 @@ type Semester {
 
 type Subject {
   display_name: String!
-  faculty: Faculty!
+  faculty: Faculty
   subject_id: String!
 }

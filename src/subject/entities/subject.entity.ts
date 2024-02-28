@@ -13,7 +13,7 @@ export class Subject {
   @Column()
   display_name: string;
 
-  @Field(() => Faculty)
+  @Field(() => Faculty, { nullable: true })
   @ManyToOne(() => Faculty)
   @JoinColumn({ name: 'faculty_id' })
   faculty: Faculty;

@@ -7,10 +7,28 @@ export function filterQuery<T>(
   query: SelectQueryBuilder<T>,
   filter: FilterArgs,
 ) {
-  return query
-    .andWhere('Class.program = :program')
-    .andWhere("subject.faculty_id ilike '%' || :faculty_id || '%'", {
-      faculty_id: '',
-    })
-    .andWhere(searchString(tableName, filter));
+  const queriedByProgram = filter.program
+    ? query.andWhere('Class.program = :program', { program: filter.program })
+    : query;
+
+  const queriedByFaculty = filter.faculty_id
+    ? queriedByProgram.andWhere(
+        "subject.faculty_id ilike '%' || :faculty_id || '%'",
+        {
+          faculty_id: filter.faculty_id,
+        },
+      )
+    : queriedByProgram;
+
+  const queriedByKeyword = filter.keyword
+    ? queriedByFaculty.andWhere(searchString(tableName, filter))
+    : queriedByFaculty;
+
+  const queriedBySemester = filter.semester_id
+    ? queriedByKeyword.andWhere('Semester.semester_id = :semester_id', {
+        semester_id: filter.semester_id,
+      })
+    : queriedByKeyword;
+
+  return queriedBySemester;
 }

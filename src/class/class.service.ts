@@ -15,13 +15,19 @@ export class ClassService {
     return paginateByQuery(
       filterQuery<Class>(
         'Class',
-        this.repo.createQueryBuilder().innerJoin('class.subject', ''),
+        this.repo.createQueryBuilder().innerJoin('Class.subject', 'subject'),
         filter,
       ),
       paginationOptions,
       filter,
       {
-        relations: { lecturer: true, semester: true, subject: true },
+        relations: {
+          lecturer: true,
+          semester: true,
+          subject: {
+            faculty: true,
+          },
+        },
       },
     );
   }
