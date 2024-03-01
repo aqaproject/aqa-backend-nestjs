@@ -20,6 +20,7 @@ export class LecturerResolver {
   @Query(() => Lecturer, {
     name: 'lecturer',
     description: 'View detail information of a specific lecturer',
+    nullable: true,
   })
   findOne(@Args('id', { type: () => String }) id: string) {
     return this.lecturerService.findOne(id);

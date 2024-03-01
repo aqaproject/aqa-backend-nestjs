@@ -14,7 +14,7 @@ export class SubjectResolver {
     return this.subjectService.findAll(filter, pagination);
   }
 
-  @Query(() => Subject, { name: 'subject' })
+  @Query(() => Subject, { name: 'subject', nullable: true })
   findOne(@Args('id', { type: () => String }) id: string) {
     return this.subjectService.findOne(id);
   }

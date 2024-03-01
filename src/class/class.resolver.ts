@@ -20,6 +20,7 @@ export class ClassResolver {
   @Query(() => Class, {
     name: 'class',
     description: 'View particular class information',
+    nullable: true,
   })
   findOne(@Args('id', { type: () => String }) id: string) {
     return this.classService.findOne(id);

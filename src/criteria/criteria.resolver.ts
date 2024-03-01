@@ -13,7 +13,7 @@ export class CriteriaResolver {
     return this.criteriaService.findAll(filter, pagination);
   }
 
-  @Query(() => Criteria, { name: 'criteria' })
+  @Query(() => Criteria, { name: 'criteria', nullable: true })
   findOne(@Args('id', { type: () => String }) id: string) {
     return this.criteriaService.findOne(id);
   }

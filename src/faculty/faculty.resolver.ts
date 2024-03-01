@@ -20,6 +20,7 @@ export class FacultyResolver {
   @Query(() => Faculty, {
     name: 'faculty',
     description: 'Get detail information of a faculty and its lecturer list',
+    nullable: true,
   })
   findOne(@Args('id', { type: () => String }) id: string) {
     return this.facultyService.findOne(id);

@@ -9,6 +9,7 @@ export class SemesterResolver {
   @Query(() => [Semester], {
     name: 'semesters',
     description: 'List all semester',
+    nullable: true,
   })
   findAll() {
     return this.semesterService.findAll();

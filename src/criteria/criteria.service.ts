@@ -6,10 +6,15 @@ import { paginateByQuery } from 'src/common/utils/paginate';
 import { Repository } from 'typeorm';
 import { Criteria } from './entities/criteria.entity';
 import { searchString } from 'src/common/utils/searchString';
+import { BaseService } from 'src/common/services/BaseService';
 
 @Injectable()
-export class CriteriaService {
-  constructor(@InjectRepository(Criteria) private repo: Repository<Criteria>) {}
+export class CriteriaService extends BaseService<Criteria> {
+  constructor(@InjectRepository(Criteria) private repo: Repository<Criteria>) {
+    super();
+  }
+
+  relations = { semester: true };
 
   async findAll(filter: FilterArgs, paginationOptions: PaginationArgs) {
     return paginateByQuery(
@@ -17,7 +22,7 @@ export class CriteriaService {
       paginationOptions,
       filter,
       {
-        relations: { semester: true },
+        relations: this.relations,
       },
     );
   }
@@ -25,7 +30,7 @@ export class CriteriaService {
   findOne(id: string): Promise<Criteria> {
     return this.repo.findOne({
       where: { criteria_id: id },
-      relations: { semester: true },
+      relations: this.relations,
     });
   }
 }
