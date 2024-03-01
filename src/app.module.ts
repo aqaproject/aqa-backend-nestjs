@@ -13,6 +13,7 @@ import { ClassModule } from './class/class.module';
 import { ProgramModule } from './program/program.module';
 import { SubjectModule } from './subject/subject.module';
 import { CriteriaModule } from './criteria/criteria.module';
+import { CommentModule } from './comment/comment.module';
 
 @Module({
   imports: [
@@ -39,6 +40,7 @@ import { CriteriaModule } from './criteria/criteria.module';
     ProgramModule,
     SubjectModule,
     CriteriaModule,
+    CommentModule,
   ],
   controllers: [AppController],
   providers: [AppService],

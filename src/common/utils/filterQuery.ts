@@ -13,7 +13,7 @@ export function filterQuery<T>(
 
   const queriedByFaculty = filter.faculty_id
     ? queriedByProgram.andWhere(
-        "subject.faculty_id ilike '%' || :faculty_id || '%'",
+        "Subject.faculty_id ilike '%' || :faculty_id || '%'",
         {
           faculty_id: filter.faculty_id,
         },

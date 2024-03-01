@@ -26,7 +26,7 @@ export class ClassService extends BaseService<Class> {
     return paginateByQuery(
       filterQuery<Class>(
         'Class',
-        this.repo.createQueryBuilder().innerJoin('Class.subject', 'subject'),
+        this.repo.createQueryBuilder().innerJoin('Class.subject', 'Subject'),
         filter,
       ),
       paginationOptions,
