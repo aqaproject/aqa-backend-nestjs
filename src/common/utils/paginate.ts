@@ -26,14 +26,22 @@ export async function paginateByQuery<T>(
   options: FindManyOptions<T>,
 ): PaginatedData<T> {
   const querySql = query
-    .take(paginationOptions.size)
-    .skip(paginationOptions.page * paginationOptions.size)
     .setFindOptions(options)
-    .setParameters(filter);
+    .setParameters(filter)
+    .take(paginationOptions.size)
+    .skip(paginationOptions.page * paginationOptions.size);
 
   console.log({ sql: querySql.getSql() });
 
-  const [data, count] = await querySql.getManyAndCount();
-
-  return { data, meta: new PaginatedMetaData(paginationOptions, count) };
+  try {
+    const [data, count] = await querySql.getManyAndCount();
+    return { data, meta: new PaginatedMetaData(paginationOptions, count) };
+  } catch (error) {
+    const count = (await querySql.getRawMany()).length;
+    const data = await querySql
+      .limit(paginationOptions.size)
+      .offset(paginationOptions.page * paginationOptions.size)
+      .getRawMany();
+    return { data, meta: new PaginatedMetaData(paginationOptions, count) };
+  }
 }

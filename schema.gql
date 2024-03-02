@@ -41,6 +41,11 @@ type Faculty {
   subjects: [Subject!]
 }
 
+type GroupedPoint {
+  average_point: Float!
+  id: String!
+}
+
 type Lecturer {
   birth_date: DateTime
   classes: [Class!]
@@ -76,6 +81,11 @@ type PaginatedCriteria {
 
 type PaginatedFaculty {
   data: [Faculty!]!
+  meta: PaginatedMetaData!
+}
+
+type PaginatedGroupedPoint {
+  data: [GroupedPoint!]!
   meta: PaginatedMetaData!
 }
 
@@ -122,6 +132,9 @@ type Query {
 
   """Get detail information of a faculty and its lecturer list"""
   faculty(id: String!): Faculty
+
+  """List all points, group by a specific entity"""
+  groupedPoints(faculty_id: String, groupEntity: String = "Subject", keyword: String = "", page: Int = 0, program: String, semester_id: String, size: Int = 10): PaginatedGroupedPoint!
 
   """View detail information of a specific lecturer"""
   lecturer(id: String!): Lecturer

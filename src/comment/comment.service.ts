@@ -1,11 +1,11 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
+import { FilterArgs } from 'src/common/args/filter.arg';
+import { PaginationArgs } from 'src/common/args/pagination.arg';
+import { filterQuery } from 'src/common/utils/filterQuery';
+import { paginateByQuery } from 'src/common/utils/paginate';
 import { Repository } from 'typeorm';
 import { Comment } from './entities/comment.entity';
-import { PaginationArgs } from 'src/common/args/pagination.arg';
-import { FilterArgs } from 'src/common/args/filter.arg';
-import { paginateByQuery } from 'src/common/utils/paginate';
-import { filterQuery } from 'src/common/utils/filterQuery';
 
 @Injectable()
 export class CommentService {

@@ -14,6 +14,7 @@ import { ProgramModule } from './program/program.module';
 import { SubjectModule } from './subject/subject.module';
 import { CriteriaModule } from './criteria/criteria.module';
 import { CommentModule } from './comment/comment.module';
+import { PointModule } from './point/point.module';
 
 @Module({
   imports: [
@@ -41,6 +42,7 @@ import { CommentModule } from './comment/comment.module';
     SubjectModule,
     CriteriaModule,
     CommentModule,
+    PointModule,
   ],
   controllers: [AppController],
   providers: [AppService],
