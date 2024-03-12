@@ -15,7 +15,6 @@ import { SubjectModule } from './subject/subject.module';
 import { CriteriaModule } from './criteria/criteria.module';
 import { CommentModule } from './comment/comment.module';
 import { PointModule } from './point/point.module';
-import { CrapModule } from './crap/crap.module';
 
 @Module({
   imports: [
@@ -44,7 +43,6 @@ import { CrapModule } from './crap/crap.module';
     CriteriaModule,
     CommentModule,
     PointModule,
-    CrapModule,
   ],
   controllers: [AppController],
   providers: [AppService],

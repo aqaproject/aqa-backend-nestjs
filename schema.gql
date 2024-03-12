@@ -117,36 +117,36 @@ type Query {
   class(id: String!): Class
 
   """List all classes"""
-  classes(faculty_id: String, keyword: String = "", page: Int = 0, program: String, semester_id: String, size: Int = 10): PaginatedClass!
+  classes(faculty_id: String, keyword: String = "", page: Int = 0, program: String, semester_id: String, size: Int = 10, subjects: [String!]): PaginatedClass!
 
   """View particular comment information"""
   comment(id: String!): Comment
 
   """List all comments"""
-  comments(faculty_id: String, keyword: String = "", page: Int = 0, program: String, semester_id: String, size: Int = 10): PaginatedComment!
+  comments(faculty_id: String, keyword: String = "", page: Int = 0, program: String, semester_id: String, size: Int = 10, subjects: [String!]): PaginatedComment!
   criteria(id: String!): Criteria
-  criterias(faculty_id: String, keyword: String = "", page: Int = 0, program: String, semester_id: String, size: Int = 10): PaginatedCriteria!
+  criterias(faculty_id: String, keyword: String = "", page: Int = 0, program: String, semester_id: String, size: Int = 10, subjects: [String!]): PaginatedCriteria!
 
   """List all faculty available"""
-  faculties(faculty_id: String, keyword: String = "", page: Int = 0, program: String, semester_id: String, size: Int = 10): PaginatedFaculty!
+  faculties(faculty_id: String, keyword: String = "", page: Int = 0, program: String, semester_id: String, size: Int = 10, subjects: [String!]): PaginatedFaculty!
 
   """Get detail information of a faculty and its lecturer list"""
   faculty(id: String!): Faculty
 
   """List all points, group by a specific entity"""
-  groupedPoints(faculty_id: String, groupEntity: String = "Subject", keyword: String = "", page: Int = 0, program: String, semester_id: String, size: Int = 10): PaginatedGroupedPoint!
+  groupedPoints(faculty_id: String, groupEntity: String = "Subject", keyword: String = "", page: Int = 0, program: String, semester_id: String, size: Int = 10, subjects: [String!]): PaginatedGroupedPoint!
 
   """View detail information of a specific lecturer"""
   lecturer(id: String!): Lecturer
 
   """List all lecturer"""
-  lecturers(faculty_id: String, keyword: String = "", page: Int = 0, program: String, semester_id: String, size: Int = 10): PaginatedLecturer!
+  lecturers(faculty_id: String, keyword: String = "", page: Int = 0, program: String, semester_id: String, size: Int = 10, subjects: [String!]): PaginatedLecturer!
   programs: [Program!]!
 
   """List all semester"""
   semesters: [Semester!]
   subject(id: String!): Subject
-  subjects(faculty_id: String, keyword: String = "", page: Int = 0, program: String, semester_id: String, size: Int = 10): PaginatedSubject!
+  subjects(faculty_id: String, keyword: String = "", page: Int = 0, program: String, semester_id: String, size: Int = 10, subjects: [String!]): PaginatedSubject!
 }
 
 type Semester {

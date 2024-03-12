@@ -30,5 +30,11 @@ export function filterQuery<T>(
       })
     : queriedByKeyword;
 
-  return queriedBySemester;
+  const queriedBySubject = filter.subjects
+    ? queriedBySemester.andWhere('Subject.subject_id in (:...subjects)', {
+        subjects: filter.subjects,
+      })
+    : queriedBySemester;
+
+  return queriedBySubject;
 }

@@ -14,6 +14,9 @@ export class FilterArgs {
   @Field({ nullable: true, defaultValue: '' })
   keyword: string;
 
+  @Field(() => [String], { nullable: true })
+  subjects: string[];
+
   //   @Field(() => Boolean, { nullable: true, defaultValue: false })
   //   matchCase: boolean;
 
