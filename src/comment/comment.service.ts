@@ -32,6 +32,23 @@ export class CommentService {
     );
   }
 
+  getQuantity(filter: FilterArgs, type: string) {
+    return {
+      type,
+      quantity: filterQuery<Comment>(
+        'Comment',
+        this.repo
+          .createQueryBuilder()
+          .innerJoin('Comment.class', 'Class')
+          .innerJoin('Class.subject', 'Subject')
+          .innerJoin('Class.semester', 'Semester'),
+        filter,
+      )
+        .andWhere('Comment.type = :type', { type })
+        .getCount(),
+    };
+  }
+
   findOne(id: string) {
     return this.repo.findOne({ where: { comment_id: id }, relations: {} });
   }

@@ -21,6 +21,11 @@ type Comment {
   type: String!
 }
 
+type CommentQuantity {
+  quantity: Int!
+  type: String!
+}
+
 type Criteria {
   criteria_id: String!
   display_name: String!
@@ -121,6 +126,7 @@ type Query {
 
   """View particular comment information"""
   comment(id: String!): Comment
+  commentQuantity(faculty_id: String, keyword: String = "", program: String, semester_id: String, subjects: [String!], type: String!): CommentQuantity!
 
   """List all comments"""
   comments(faculty_id: String, keyword: String = "", page: Int = 0, program: String, semester_id: String, size: Int = 10, subjects: [String!]): PaginatedComment!
