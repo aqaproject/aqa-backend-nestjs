@@ -10,4 +10,8 @@ export class SemesterService {
   async findAll() {
     return this.repo.find();
   }
+
+  async findOne(id: string) {
+    return this.repo.findOne({ where: { semester_id: id } });
+  }
 }
