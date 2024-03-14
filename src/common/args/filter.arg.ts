@@ -21,7 +21,7 @@ export class FilterArgs {
   criteria_id: string;
 
   @Field({ nullable: true })
-  subject_id: string;
+  class_type: 'LT' | 'TH1' | 'TH2';
 
   //   @Field(() => Boolean, { nullable: true, defaultValue: false })
   //   matchCase: boolean;

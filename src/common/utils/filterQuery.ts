@@ -42,5 +42,11 @@ export function filterQuery<T>(
       })
     : queriedBySubject;
 
-  return queriedByCriteria;
+  const queriedByClassType = filter.class_type
+    ? queriedByCriteria.andWhere('Class.class_type = :class_type', {
+        class_type: filter.class_type,
+      })
+    : queriedByCriteria;
+
+  return queriedByClassType;
 }

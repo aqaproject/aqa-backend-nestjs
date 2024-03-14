@@ -1,12 +1,12 @@
 import { Args, Parent, Query, ResolveField, Resolver } from '@nestjs/graphql';
 import { FilterArgs } from 'src/common/args/filter.arg';
 import { PaginationArgs } from 'src/common/args/pagination.arg';
+import { GroupedPoint } from 'src/point/dto/PaginatedGroupedPoint';
+import { PointService } from 'src/point/point.service';
+import { FindAllArgs } from './args/find-all.args';
 import { PaginatedSubject } from './dto/PaginatedSubject';
 import { Subject } from './entities/subject.entity';
 import { SubjectService } from './subject.service';
-import { FindAllArgs } from './args/find-all.args';
-import { PointService } from 'src/point/point.service';
-import { Point } from 'src/point/entities/point.entity';
 
 @Resolver(() => Subject)
 export class SubjectResolver {
@@ -29,17 +29,14 @@ export class SubjectResolver {
     return this.subjectService.findOne(id);
   }
 
-  @ResolveField(() => [Point])
-  async points(
-    @Parent() subject: Subject,
-    @Args() filter: FilterArgs,
-    @Args() pagination: PaginationArgs,
-  ) {
+  @ResolveField(() => [GroupedPoint])
+  async points(@Parent() subject: Subject, @Args() filter: FilterArgs) {
     const { subject_id } = subject;
-    return this.pointService.findAll(
-      { ...filter, subject_id },
-      pagination,
-      'Subject',
+    const result = await this.pointService.findAll(
+      { ...filter, subjects: [subject_id] },
+      { size: 100, page: 0 },
+      'Criteria',
     );
+    return result.data;
   }
 }

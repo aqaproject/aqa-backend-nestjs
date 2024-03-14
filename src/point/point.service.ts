@@ -14,13 +14,14 @@ export class PointService {
   findAll(
     filter: FilterArgs,
     paginationOptions: PaginationArgs,
-    groupEntity: 'Subject' | 'Lecturer' | 'Faculty',
+    groupEntity: 'Subject' | 'Lecturer' | 'Faculty' | 'Criteria',
   ) {
     return paginateByQuery(
       filterQuery<Point>(
         'Point',
         this.repo
           .createQueryBuilder()
+          .innerJoin('Point.criteria', 'Criteria')
           .innerJoin('Point.class', 'Class')
           .innerJoin('Class.subject', 'Subject')
           .innerJoin('Class.semester', 'Semester'),
@@ -34,20 +35,7 @@ export class PointService {
         .groupBy(`${groupEntity}.${groupEntity.toLowerCase()}_id`),
       paginationOptions,
       filter,
-      {},
+      { isRaw: true },
     );
   }
 }
-
-// function goiAPI(callback) {
-//   // goi API
-//   .....
-
-//   callback();
-// }
-
-// function thucHienSauKhiLamXong() {
-//   console.log("Xong")
-// }
-
-// goiAPI()
