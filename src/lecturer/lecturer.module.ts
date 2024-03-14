@@ -15,5 +15,6 @@ import { ClassModule } from 'src/class/class.module';
     ClassModule,
   ],
   providers: [LecturerResolver, LecturerService],
+  exports: [LecturerService],
 })
 export class LecturerModule {}
