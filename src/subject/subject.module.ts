@@ -9,5 +9,6 @@ import { FacultyModule } from 'src/faculty/faculty.module';
 @Module({
   imports: [TypeOrmModule.forFeature([Subject]), PointModule, FacultyModule],
   providers: [SubjectResolver, SubjectService],
+  exports: [SubjectService],
 })
 export class SubjectModule {}
