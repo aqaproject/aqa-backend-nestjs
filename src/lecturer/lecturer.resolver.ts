@@ -1,6 +1,5 @@
 import { Args, Query, Resolver } from '@nestjs/graphql';
-import { FilterArgs } from 'src/common/args/filter.arg';
-import { PaginationArgs } from 'src/common/args/pagination.arg';
+import { QueryArgs } from 'src/common/args/query.arg';
 import { PaginatedLecturer } from './dto/PaginatedLecturer';
 import { Lecturer } from './entities/lecturer.entity';
 import { LecturerService } from './lecturer.service';
@@ -13,8 +12,8 @@ export class LecturerResolver {
     name: 'lecturers',
     description: 'List all lecturer',
   })
-  findAll(@Args() filter: FilterArgs, @Args() pagination: PaginationArgs) {
-    return this.lecturerService.findAll(filter, pagination);
+  findAll(@Args() queryArgs: QueryArgs) {
+    return this.lecturerService.findAll(queryArgs);
   }
 
   @Query(() => Lecturer, {

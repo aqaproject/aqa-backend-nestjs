@@ -8,6 +8,7 @@ type Class {
   display_name: String!
   lecturer: Lecturer
   participating_student: Int!
+  points: [Point!]
   program: String!
   semester: Semester!
   subject: Subject
@@ -76,6 +77,7 @@ type Lecturer {
   ngach: String
   phone: String
   position: String
+  total_point: Float
   username: String
 }
 
@@ -128,6 +130,14 @@ input PaginationArgs {
   size: Int = 10
 }
 
+type Point {
+  class: Class
+  criteria: Criteria
+  max_point: Int!
+  point: Int!
+  point_id: String!
+}
+
 type Program {
   program: String!
 }
@@ -161,7 +171,7 @@ type Query {
   lecturer(id: String!): Lecturer
 
   """List all lecturer"""
-  lecturers(class_type: String, criteria_id: String, faculty_id: String, keyword: String = "", page: Int = 0, program: String, semester_id: String, size: Int = 10, subjects: [String!]): PaginatedLecturer!
+  lecturers(filter: FilterArgs = {}, pagination: PaginationArgs = {page: 0, size: 10}, sort: SortArgs = {}): PaginatedLecturer!
   programs: [Program!]!
 
   """List all semester"""

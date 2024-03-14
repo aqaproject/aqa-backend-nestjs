@@ -1,11 +1,11 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { FilterArgs } from 'src/common/args/filter.arg';
-import { PaginationArgs } from 'src/common/args/pagination.arg';
-import { paginate } from 'src/common/utils/paginate';
-import { FindOptionsRelations, ILike, Repository } from 'typeorm';
-import { Lecturer } from './entities/lecturer.entity';
+import { QueryArgs } from 'src/common/args/query.arg';
 import { BaseService } from 'src/common/services/BaseService';
+import { filterQuery } from 'src/common/utils/filterQuery';
+import { paginateByQuery } from 'src/common/utils/paginate';
+import { FindOptionsRelations, Repository } from 'typeorm';
+import { Lecturer } from './entities/lecturer.entity';
 
 @Injectable()
 export class LecturerService extends BaseService<Lecturer> {
@@ -17,11 +17,40 @@ export class LecturerService extends BaseService<Lecturer> {
     faculty: true,
   };
 
-  async findAll(filter: FilterArgs, paginationOptions: PaginationArgs) {
-    return paginate(this.repo, paginationOptions, {
-      where: { display_name: ILike(`%${filter.keyword}%`) },
-      relations: this.relations,
-    });
+  async findAll({ filter, pagination, sort }: QueryArgs) {
+    return paginateByQuery(
+      filterQuery<Lecturer>(
+        Lecturer,
+        this.repo
+          .createQueryBuilder()
+          .leftJoin('Lecturer.classes', 'Class')
+          .leftJoin('Lecturer.faculty', 'Faculty')
+          .leftJoin('Class.points', 'Point')
+          .leftJoin('Class.subject', 'Subject')
+          .leftJoin('Class.semester', 'Semester'),
+        filter,
+        sort,
+      )
+        .select('Lecturer.lecturer_id', 'lecturer_id')
+        .addSelect('Lecturer.display_name', 'display_name')
+        .addSelect('Lecturer.email', 'email')
+        .addSelect('Lecturer.birth_date', 'birth_date')
+        .addSelect('Lecturer.faculty_id', 'faculty_id')
+        .addSelect('Lecturer.gender', 'gender')
+        .addSelect('Lecturer.learning', 'learning')
+        .addSelect('Lecturer.learning_position', 'learning_position')
+        .addSelect('Lecturer.mscb', 'mscb')
+        .addSelect('Lecturer.ngach', 'ngach')
+        .addSelect('Lecturer.phone', 'phone')
+        .addSelect('Lecturer.position', 'position')
+        .addSelect('Lecturer.username', 'username')
+        .addSelect('AVG(Point.point / Point.max_point)', 'total_point')
+        .andWhere('Point.max_point != 0')
+        .addGroupBy('Lecturer.lecturer_id'),
+      pagination,
+      filter,
+      { isRaw: true },
+    );
   }
 
   findOne(id: string): Promise<Lecturer> {

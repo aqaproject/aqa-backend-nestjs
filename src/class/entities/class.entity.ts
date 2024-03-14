@@ -1,8 +1,16 @@
 import { ObjectType, Field, Int } from '@nestjs/graphql';
 import { Lecturer } from 'src/lecturer/entities/lecturer.entity';
+import { Point } from 'src/point/entities/point.entity';
 import { Semester } from 'src/semester/entities/semester.entity';
 import { Subject } from 'src/subject/entities/subject.entity';
-import { Column, Entity, JoinColumn, ManyToOne, PrimaryColumn } from 'typeorm';
+import {
+  Column,
+  Entity,
+  JoinColumn,
+  ManyToOne,
+  OneToMany,
+  PrimaryColumn,
+} from 'typeorm';
 
 @ObjectType()
 @Entity({ name: 'class' })
@@ -45,4 +53,8 @@ export class Class {
   @Column()
   @Field(() => Int)
   participating_student: number;
+
+  @OneToMany(() => Point, (point) => point.class)
+  @Field(() => [Point], { nullable: true })
+  points: Point[];
 }

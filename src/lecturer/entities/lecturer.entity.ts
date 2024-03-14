@@ -73,4 +73,7 @@ export class Lecturer {
   @OneToMany(() => Class, (class_) => class_.lecturer)
   @Field(() => [Class], { nullable: true })
   classes: Class[];
+
+  @Field({ nullable: true })
+  total_point: number;
 }
