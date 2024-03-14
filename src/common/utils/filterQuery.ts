@@ -54,6 +54,11 @@ export function filterQuery<T>(
       },
     );
 
+  if (filter.class_id)
+    filteredQuery = filteredQuery.andWhere('Class.class_id = :class_id', {
+      class_id: filter.class_id,
+    });
+
   if (filter.class_type)
     filteredQuery = filteredQuery.andWhere('Class.class_type = :class_type', {
       class_type: filter.class_type,

@@ -28,10 +28,11 @@ export class PointService {
           .innerJoin('Class.semester', 'Semester'),
         filter,
       )
-        .select([
-          'AVG(Point.point / Point.max_point) AS average_point',
-          `${groupEntity}.${groupEntity.toLowerCase()}_id as id`,
-        ])
+        .select('AVG(Point.point / Point.max_point)', 'average_point')
+        .addSelect('AVG(Point.point / Point.max_point)', 'average_point')
+        .addSelect('AVG(Point.point)', 'point')
+        .addSelect('AVG(Point.max_point)', 'max_point')
+        .addSelect(`${groupEntity}.${groupEntity.toLowerCase()}_id`, 'id')
         .andWhere('Point.max_point != 0')
         .groupBy(`${groupEntity}.${groupEntity.toLowerCase()}_id`),
       paginationOptions,

@@ -6,6 +6,12 @@ export class GroupedPoint {
   @Field()
   average_point: number;
 
+  @Field({ nullable: true })
+  point: number;
+
+  @Field({ nullable: true })
+  max_point: number;
+
   @Field()
   id: string;
 }

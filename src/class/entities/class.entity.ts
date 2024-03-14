@@ -55,6 +55,5 @@ export class Class {
   participating_student: number;
 
   @OneToMany(() => Point, (point) => point.class)
-  @Field(() => [Point], { nullable: true })
   points: Point[];
 }
