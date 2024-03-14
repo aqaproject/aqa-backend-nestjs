@@ -31,7 +31,7 @@ export class Lecturer {
 
   @ManyToOne(() => Faculty, (faculty) => faculty.lecturers)
   @JoinColumn({ name: 'faculty_id' })
-  @Field(() => Faculty, { nullable: true })
+  // @Field(() => Faculty, { nullable: true })
   faculty: Faculty;
 
   @Column()
@@ -71,7 +71,7 @@ export class Lecturer {
   position: string;
 
   @OneToMany(() => Class, (class_) => class_.lecturer)
-  @Field(() => [Class], { nullable: true })
+  // @Field(() => [Class], { nullable: true })
   classes: Class[];
 
   @Field({ nullable: true })

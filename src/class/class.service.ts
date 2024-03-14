@@ -1,12 +1,11 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { FilterArgs } from 'src/common/args/filter.arg';
-import { PaginationArgs } from 'src/common/args/pagination.arg';
+import { QueryArgs } from 'src/common/args/query.arg';
+import { BaseService } from 'src/common/services/BaseService';
 import { filterQuery } from 'src/common/utils/filterQuery';
 import { paginateByQuery } from 'src/common/utils/paginate';
 import { FindOptionsRelations, Repository } from 'typeorm';
 import { Class } from './entities/class.entity';
-import { BaseService } from 'src/common/services/BaseService';
 
 @Injectable()
 export class ClassService extends BaseService<Class> {
@@ -22,14 +21,20 @@ export class ClassService extends BaseService<Class> {
     },
   };
 
-  async findAll(filter: FilterArgs, paginationOptions: PaginationArgs) {
+  async findAll({ filter, pagination }: QueryArgs) {
     return paginateByQuery(
       filterQuery<Class>(
         'Class',
-        this.repo.createQueryBuilder().innerJoin('Class.subject', 'Subject'),
+        this.repo
+          .createQueryBuilder()
+          .leftJoin('Class.subject', 'Subject')
+          .leftJoin('Class.lecturer', 'Lecturer')
+          .leftJoin('Lecturer.faculty', 'Faculty')
+          .leftJoin('Class.points', 'Point')
+          .leftJoin('Class.semester', 'Semester'),
         filter,
       ),
-      paginationOptions,
+      pagination,
       filter,
       {
         relations: this.relations,

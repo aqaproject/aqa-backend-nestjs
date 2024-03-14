@@ -65,10 +65,10 @@ type GroupedPoint {
 
 type Lecturer {
   birth_date: DateTime
-  classes: [Class!]
+  classes(class_type: String, criteria_id: String, faculty_id: String, keyword: String = "", lecturer_id: String, program: String, semester_id: String, subjects: [String!]): PaginatedClass!
   display_name: String
   email: String
-  faculty: Faculty
+  faculty: Faculty!
   faculty_id: String
   gender: Boolean
   learning: String
@@ -149,7 +149,7 @@ type Query {
   class(id: String!): Class
 
   """List all classes"""
-  classes(class_type: String, criteria_id: String, faculty_id: String, keyword: String = "", lecturer_id: String, page: Int = 0, program: String, semester_id: String, size: Int = 10, subjects: [String!]): PaginatedClass!
+  classes(filter: FilterArgs = {}, pagination: PaginationArgs = {page: 0, size: 10}, sort: SortArgs = {}): PaginatedClass!
 
   """View particular comment information"""
   comment(id: String!): Comment

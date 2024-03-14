@@ -6,14 +6,14 @@ import { PaginationArgs } from './pagination.arg';
 @ArgsType()
 export class QueryArgs {
   @Field(() => FilterArgs, { nullable: true, defaultValue: {} })
-  filter: FilterArgs;
+  filter?: FilterArgs;
 
   @Field(() => PaginationArgs, {
     nullable: true,
     defaultValue: { page: 0, size: 10 },
   })
-  pagination: PaginationArgs;
+  pagination?: PaginationArgs;
 
   @Field(() => SortArgs, { nullable: true, defaultValue: {} })
-  sort: SortArgs;
+  sort?: SortArgs;
 }

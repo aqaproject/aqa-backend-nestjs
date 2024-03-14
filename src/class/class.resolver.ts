@@ -1,9 +1,8 @@
 import { Args, Query, Resolver } from '@nestjs/graphql';
+import { QueryArgs } from 'src/common/args/query.arg';
 import { ClassService } from './class.service';
-import { Class } from './entities/class.entity';
-import { PaginationArgs } from 'src/common/args/pagination.arg';
-import { FilterArgs } from 'src/common/args/filter.arg';
 import { PaginatedClass } from './dto/PaginatedClass';
+import { Class } from './entities/class.entity';
 
 @Resolver(() => Class)
 export class ClassResolver {
@@ -13,8 +12,8 @@ export class ClassResolver {
     name: 'classes',
     description: 'List all classes',
   })
-  findAll(@Args() filter: FilterArgs, @Args() pagination: PaginationArgs) {
-    return this.classService.findAll(filter, pagination);
+  findAll(@Args() queryArgs: QueryArgs) {
+    return this.classService.findAll(queryArgs);
   }
 
   @Query(() => Class, {

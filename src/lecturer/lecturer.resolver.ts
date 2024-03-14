@@ -1,13 +1,15 @@
 import { Args, Parent, Query, ResolveField, Resolver } from '@nestjs/graphql';
+import { ClassService } from 'src/class/class.service';
+import { PaginatedClass } from 'src/class/dto/PaginatedClass';
+import { FilterArgs } from 'src/common/args/filter.arg';
 import { QueryArgs } from 'src/common/args/query.arg';
+import { Faculty } from 'src/faculty/entities/faculty.entity';
+import { FacultyService } from 'src/faculty/faculty.service';
+import { GroupedPoint } from 'src/point/dto/PaginatedGroupedPoint';
+import { PointService } from 'src/point/point.service';
 import { PaginatedLecturer } from './dto/PaginatedLecturer';
 import { Lecturer } from './entities/lecturer.entity';
 import { LecturerService } from './lecturer.service';
-import { GroupedPoint } from 'src/point/dto/PaginatedGroupedPoint';
-import { FilterArgs } from 'src/common/args/filter.arg';
-import { FacultyService } from 'src/faculty/faculty.service';
-import { PointService } from 'src/point/point.service';
-import { Faculty } from 'src/faculty/entities/faculty.entity';
 
 @Resolver(() => Lecturer)
 export class LecturerResolver {
@@ -15,6 +17,7 @@ export class LecturerResolver {
     private readonly lecturerService: LecturerService,
     private readonly pointService: PointService,
     private readonly facultyService: FacultyService,
+    private readonly classService: ClassService,
   ) {}
 
   @Query(() => PaginatedLecturer, {
@@ -49,5 +52,15 @@ export class LecturerResolver {
   async faculty(@Parent() lecturer: Lecturer) {
     const { faculty_id } = lecturer;
     return this.facultyService.findOne(faculty_id);
+  }
+
+  @ResolveField(() => PaginatedClass)
+  async classes(@Parent() lecturer: Lecturer, @Args() filter: FilterArgs) {
+    const { lecturer_id } = lecturer;
+    const result = await this.classService.findAll({
+      filter: { ...filter, lecturer_id },
+      pagination: { size: 100, page: 0 },
+    });
+    return result;
   }
 }
