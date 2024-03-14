@@ -21,7 +21,7 @@ export class ClassService extends BaseService<Class> {
     },
   };
 
-  async findAll({ filter, pagination }: QueryArgs) {
+  async findAll({ filter, sort, pagination }: QueryArgs) {
     return paginateByQuery(
       filterQuery<Class>(
         'Class',
@@ -33,6 +33,7 @@ export class ClassService extends BaseService<Class> {
           .leftJoin('Class.points', 'Point')
           .leftJoin('Class.semester', 'Semester'),
         filter,
+        sort,
       ),
       pagination,
       filter,
