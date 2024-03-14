@@ -10,11 +10,18 @@ export class Subject {
   subject_id: string;
 
   @Field()
-  @Column()
+  @Column({ nullable: true })
   display_name: string;
+
+  @Field()
+  @Column()
+  faculty_id: string;
 
   @Field(() => Faculty, { nullable: true })
   @ManyToOne(() => Faculty)
   @JoinColumn({ name: 'faculty_id' })
   faculty: Faculty;
+
+  @Field({ nullable: true })
+  total_point: number;
 }

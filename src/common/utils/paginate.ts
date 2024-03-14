@@ -23,7 +23,7 @@ export async function paginateByQuery<T>(
   query: SelectQueryBuilder<T>,
   paginationOptions: PaginationArgs,
   filter: FilterArgs,
-  options: FindManyOptions<T>,
+  options?: FindManyOptions<T>,
 ): PaginatedData<T> {
   const querySql = query
     .setFindOptions(options)
@@ -33,15 +33,16 @@ export async function paginateByQuery<T>(
 
   console.log({ sql: querySql.getSql() });
 
-  try {
-    const [data, count] = await querySql.getManyAndCount();
-    return { data, meta: new PaginatedMetaData(paginationOptions, count) };
-  } catch (error) {
-    const count = (await querySql.getRawMany()).length;
-    const data = await querySql
-      .limit(paginationOptions.size)
-      .offset(paginationOptions.page * paginationOptions.size)
-      .getRawMany();
-    return { data, meta: new PaginatedMetaData(paginationOptions, count) };
-  }
+  // try {
+  //   const [data, count] = await querySql.getManyAndCount();
+  //   console.log({ data });
+  //   return { data, meta: new PaginatedMetaData(paginationOptions, count) };
+  // } catch (error) {
+  // }
+  const count = (await querySql.getRawMany()).length;
+  const data = await querySql
+    .limit(paginationOptions.size)
+    .offset(paginationOptions.page * paginationOptions.size)
+    .getRawMany();
+  return { data, meta: new PaginatedMetaData(paginationOptions, count) };
 }

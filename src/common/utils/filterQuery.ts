@@ -36,5 +36,11 @@ export function filterQuery<T>(
       })
     : queriedBySemester;
 
-  return queriedBySubject;
+  const queriedByCriteria = filter.criteria_id
+    ? queriedBySubject.andWhere('Point.criteria_id = :criteria_id', {
+        criterid_id: filter.criteria_id,
+      })
+    : queriedBySubject;
+
+  return queriedByCriteria;
 }

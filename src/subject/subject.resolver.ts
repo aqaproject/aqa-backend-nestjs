@@ -4,14 +4,19 @@ import { PaginationArgs } from 'src/common/args/pagination.arg';
 import { PaginatedSubject } from './dto/PaginatedSubject';
 import { Subject } from './entities/subject.entity';
 import { SubjectService } from './subject.service';
+import { FindAllArgs } from './args/find-all.args';
 
 @Resolver(() => Subject)
 export class SubjectResolver {
   constructor(private readonly subjectService: SubjectService) {}
 
   @Query(() => PaginatedSubject, { name: 'subjects' })
-  findAll(@Args() filter: FilterArgs, @Args() pagination: PaginationArgs) {
-    return this.subjectService.findAll(filter, pagination);
+  findAll(
+    @Args() filter: FilterArgs,
+    @Args() subjectFilter: FindAllArgs,
+    @Args() pagination: PaginationArgs,
+  ) {
+    return this.subjectService.findAll(filter, subjectFilter, pagination);
   }
 
   @Query(() => Subject, { name: 'subject', nullable: true })

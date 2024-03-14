@@ -17,6 +17,9 @@ export class FilterArgs {
   @Field(() => [String], { nullable: true })
   subjects: string[];
 
+  @Field({ nullable: true })
+  criteria_id: string;
+
   //   @Field(() => Boolean, { nullable: true, defaultValue: false })
   //   matchCase: boolean;
 
