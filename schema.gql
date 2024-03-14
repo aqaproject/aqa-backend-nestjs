@@ -65,7 +65,7 @@ type GroupedPoint {
 
 type Lecturer {
   birth_date: DateTime
-  classes(class_type: String, criteria_id: String, faculty_id: String, keyword: String = "", lecturer_id: String, program: String, semester_id: String, subjects: [String!]): PaginatedClass!
+  classes(filter: FilterArgs = {}, pagination: PaginationArgs = {page: 0, size: 10}, sort: SortArgs = {}): PaginatedClass!
   display_name: String
   email: String
   faculty: Faculty!

@@ -55,11 +55,11 @@ export class LecturerResolver {
   }
 
   @ResolveField(() => PaginatedClass)
-  async classes(@Parent() lecturer: Lecturer, @Args() filter: FilterArgs) {
+  async classes(@Parent() lecturer: Lecturer, @Args() queryArgs: QueryArgs) {
     const { lecturer_id } = lecturer;
     const result = await this.classService.findAll({
-      filter: { ...filter, lecturer_id },
-      pagination: { size: 100, page: 0 },
+      ...queryArgs,
+      filter: { ...queryArgs.filter, lecturer_id },
     });
     return result;
   }
