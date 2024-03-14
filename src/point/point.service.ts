@@ -30,7 +30,7 @@ export class PointService {
           'AVG(Point.point / Point.max_point) AS average_point',
           `${groupEntity}.${groupEntity.toLowerCase()}_id as id`,
         ])
-        .where('Point.max_point != 0')
+        .andWhere('Point.max_point != 0')
         .groupBy(`${groupEntity}.${groupEntity.toLowerCase()}_id`),
       paginationOptions,
       filter,

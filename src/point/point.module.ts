@@ -7,5 +7,6 @@ import { Point } from './entities/point.entity';
 @Module({
   imports: [TypeOrmModule.forFeature([Point])],
   providers: [PointResolver, PointService],
+  exports: [PointService],
 })
 export class PointModule {}
