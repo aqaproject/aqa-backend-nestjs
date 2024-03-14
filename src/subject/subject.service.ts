@@ -33,12 +33,8 @@ export class SubjectService extends BaseService<Subject> {
         'Subject',
         this.repo
           .createQueryBuilder()
-          .leftJoinAndSelect(
-            Class,
-            'Class',
-            'Class.subject_id = Subject.subject_id',
-          )
-          .leftJoinAndSelect(Point, 'Point', 'Point.class_id = Class.class_id')
+          .leftJoin(Class, 'Class', 'Class.subject_id = Subject.subject_id')
+          .leftJoin(Point, 'Point', 'Point.class_id = Class.class_id')
           .innerJoin('Class.semester', 'Semester'),
         filter,
       )
@@ -50,13 +46,13 @@ export class SubjectService extends BaseService<Subject> {
         .addOrderBy(
           subjectFilter.filter_field == 'point'
             ? 'total_point'
-            : 'Subject.display_name',
+            : 'Subject.display_namec',
           subjectFilter.sort,
         )
         .addGroupBy('Subject.subject_id'),
       paginationOptions,
       filter,
-      {},
+      { isRaw: true },
     );
   }
 
