@@ -46,7 +46,7 @@ export class SubjectService extends BaseService<Subject> {
         .addOrderBy(
           subjectFilter.filter_field == 'point'
             ? 'total_point'
-            : 'Subject.display_namec',
+            : 'Subject.display_name',
           subjectFilter.sort,
         )
         .addGroupBy('Subject.subject_id'),
