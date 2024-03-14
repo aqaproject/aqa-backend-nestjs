@@ -6,12 +6,15 @@ import { PointService } from 'src/point/point.service';
 import { PaginatedSubject } from './dto/PaginatedSubject';
 import { Subject } from './entities/subject.entity';
 import { SubjectService } from './subject.service';
+import { FacultyService } from 'src/faculty/faculty.service';
+import { Faculty } from 'src/faculty/entities/faculty.entity';
 
 @Resolver(() => Subject)
 export class SubjectResolver {
   constructor(
     private readonly subjectService: SubjectService,
     private readonly pointService: PointService,
+    private readonly facultyService: FacultyService,
   ) {}
 
   @Query(() => PaginatedSubject, { name: 'subjects' })
@@ -33,5 +36,11 @@ export class SubjectResolver {
       'Criteria',
     );
     return result.data;
+  }
+
+  @ResolveField(() => Faculty)
+  async faculty(@Parent() subject: Subject) {
+    const { faculty_id } = subject;
+    return this.facultyService.findOne(faculty_id);
   }
 }

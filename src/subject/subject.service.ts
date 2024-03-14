@@ -44,7 +44,6 @@ export class SubjectService extends BaseService<Subject> {
   findOne(id: string): Promise<Subject> {
     return this.repo.findOne({
       where: { subject_id: id },
-      relations: this.relations,
     });
   }
 }
