@@ -19,10 +19,8 @@ export class Faculty {
   full_name: string;
 
   @OneToMany(() => Lecturer, (lecturer) => lecturer.faculty)
-  @Field(() => [Lecturer], { nullable: true })
   lecturers: Lecturer[];
 
   @OneToMany(() => Subject, (subject) => subject.faculty)
-  @Field(() => [Subject], { nullable: true })
   subjects: Subject[];
 }

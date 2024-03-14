@@ -18,14 +18,12 @@ export class FacultyService extends BaseService<Faculty> {
   async findAll(filter: FilterArgs, paginationOptions: PaginationArgs) {
     return paginate(this.repo, paginationOptions, {
       where: { display_name: ILike(`%${filter.keyword}%`) },
-      relations: this.relations,
     });
   }
 
   findOne(id: string) {
     return this.repo.findOne({
       where: { faculty_id: id },
-      relations: this.relations,
     });
   }
 }

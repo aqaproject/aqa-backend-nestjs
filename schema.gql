@@ -43,8 +43,8 @@ type Faculty {
   display_name: String!
   faculty_id: String!
   full_name: String
-  lecturers: [Lecturer!]
-  subjects: [Subject!]
+  lecturers(filter: FilterArgs = {}, pagination: PaginationArgs = {page: 0, size: 10}, sort: SortArgs = {}): PaginatedLecturer!
+  subjects(filter: FilterArgs = {}, pagination: PaginationArgs = {page: 0, size: 10}, sort: SortArgs = {}): PaginatedSubject!
 }
 
 input FilterArgs {
