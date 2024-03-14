@@ -24,10 +24,6 @@ export class SubjectService extends BaseService<Subject> {
     subjectFilter: FindAllArgs,
     paginationOptions: PaginationArgs,
   ) {
-    // return paginate(this.repo, paginationOptions, {
-    //   where: { display_name: ILike(`%${filter.keyword}%`) },
-    //   relations: this.relations,
-    // });
     return paginateByQuery(
       filterQuery<Subject>(
         'Subject',
