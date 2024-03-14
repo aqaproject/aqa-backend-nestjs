@@ -37,16 +37,13 @@ export class ClassService extends BaseService<Class> {
       ),
       pagination,
       filter,
-      {
-        relations: this.relations,
-      },
+      {},
     );
   }
 
   findOne(id: string): Promise<Class> {
     return this.repo.findOne({
       where: { class_id: id },
-      relations: this.relations,
     });
   }
 }

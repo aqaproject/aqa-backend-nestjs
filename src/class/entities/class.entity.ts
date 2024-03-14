@@ -25,8 +25,10 @@ export class Class {
 
   @ManyToOne(() => Semester)
   @JoinColumn({ name: 'semester_id' })
-  @Field(() => Semester)
   semester: Semester;
+
+  @Column()
+  semester_id: string;
 
   @Column()
   @Field()
@@ -36,15 +38,19 @@ export class Class {
   @Field()
   class_type: string;
 
-  @Field(() => Subject, { nullable: true })
   @ManyToOne(() => Subject)
   @JoinColumn({ name: 'subject_id' })
   subject: Subject;
 
+  @Column()
+  subject_id: string;
+
   @ManyToOne(() => Lecturer, (lecturer) => lecturer.classes)
   @JoinColumn({ name: 'lecturer_id' })
-  @Field(() => Lecturer, { nullable: true })
   lecturer: Lecturer;
+
+  @Column()
+  lecturer_id: string;
 
   @Column()
   @Field(() => Int)

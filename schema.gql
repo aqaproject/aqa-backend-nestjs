@@ -6,12 +6,12 @@ type Class {
   class_id: String!
   class_type: String!
   display_name: String!
-  lecturer: Lecturer
+  lecturer: Lecturer!
   participating_student: Int!
   points(class_id: String, class_type: String, criteria_id: String, faculty_id: String, keyword: String = "", lecturer_id: String, program: String, semester_id: String, subjects: [String!]): [GroupedPoint!]!
   program: String!
   semester: Semester!
-  subject: Subject
+  subject: Subject!
   total_student: Int!
 }
 

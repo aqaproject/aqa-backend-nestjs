@@ -6,12 +6,21 @@ import { Class } from './entities/class.entity';
 import { GroupedPoint } from 'src/point/dto/PaginatedGroupedPoint';
 import { FilterArgs } from 'src/common/args/filter.arg';
 import { PointService } from 'src/point/point.service';
+import { Lecturer } from 'src/lecturer/entities/lecturer.entity';
+import { LecturerService } from 'src/lecturer/lecturer.service';
+import { SemesterService } from 'src/semester/semester.service';
+import { Semester } from 'src/semester/entities/semester.entity';
+import { Subject } from 'src/subject/entities/subject.entity';
+import { SubjectService } from 'src/subject/subject.service';
 
 @Resolver(() => Class)
 export class ClassResolver {
   constructor(
     private readonly classService: ClassService,
     private readonly pointService: PointService,
+    private readonly subjectService: SubjectService,
+    private readonly semesterService: SemesterService,
+    private readonly lecturerService: LecturerService,
   ) {}
 
   @Query(() => PaginatedClass, {
@@ -40,5 +49,23 @@ export class ClassResolver {
       'Criteria',
     );
     return result.data;
+  }
+
+  @ResolveField(() => Lecturer)
+  async lecturer(@Parent() classItem: Class) {
+    const { lecturer_id } = classItem;
+    return await this.lecturerService.findOne(lecturer_id);
+  }
+
+  @ResolveField(() => Semester)
+  async semester(@Parent() classItem: Class) {
+    const { semester_id } = classItem;
+    return await this.semesterService.findOne(semester_id);
+  }
+
+  @ResolveField(() => Subject)
+  async subject(@Parent() classItem: Class) {
+    const { subject_id } = classItem;
+    return this.subjectService.findOne(subject_id);
   }
 }
