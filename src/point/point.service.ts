@@ -24,6 +24,7 @@ export class PointService {
           .innerJoin('Point.criteria', 'Criteria')
           .innerJoin('Point.class', 'Class')
           .innerJoin('Class.subject', 'Subject')
+          .innerJoin('Class.lecturer', 'Lecturer')
           .innerJoin('Class.semester', 'Semester'),
         filter,
       )

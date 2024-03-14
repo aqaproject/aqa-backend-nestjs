@@ -52,6 +52,7 @@ input FilterArgs {
   criteria_id: String
   faculty_id: String
   keyword: String = ""
+  lecturer_id: String
   program: String
   semester_id: String
   subjects: [String!]
@@ -76,6 +77,7 @@ type Lecturer {
   mscb: Int
   ngach: String
   phone: String
+  points(class_type: String, criteria_id: String, faculty_id: String, keyword: String = "", lecturer_id: String, program: String, semester_id: String, subjects: [String!]): [GroupedPoint!]!
   position: String
   total_point: Float
   username: String
@@ -147,25 +149,25 @@ type Query {
   class(id: String!): Class
 
   """List all classes"""
-  classes(class_type: String, criteria_id: String, faculty_id: String, keyword: String = "", page: Int = 0, program: String, semester_id: String, size: Int = 10, subjects: [String!]): PaginatedClass!
+  classes(class_type: String, criteria_id: String, faculty_id: String, keyword: String = "", lecturer_id: String, page: Int = 0, program: String, semester_id: String, size: Int = 10, subjects: [String!]): PaginatedClass!
 
   """View particular comment information"""
   comment(id: String!): Comment
-  commentQuantity(class_type: String, criteria_id: String, faculty_id: String, keyword: String = "", program: String, semester_id: String, subjects: [String!], type: String!): CommentQuantity!
+  commentQuantity(class_type: String, criteria_id: String, faculty_id: String, keyword: String = "", lecturer_id: String, program: String, semester_id: String, subjects: [String!], type: String!): CommentQuantity!
 
   """List all comments"""
-  comments(class_type: String, criteria_id: String, faculty_id: String, keyword: String = "", page: Int = 0, program: String, semester_id: String, size: Int = 10, subjects: [String!]): PaginatedComment!
+  comments(class_type: String, criteria_id: String, faculty_id: String, keyword: String = "", lecturer_id: String, page: Int = 0, program: String, semester_id: String, size: Int = 10, subjects: [String!]): PaginatedComment!
   criteria(id: String!): Criteria
-  criterias(class_type: String, criteria_id: String, faculty_id: String, keyword: String = "", page: Int = 0, program: String, semester_id: String, size: Int = 10, subjects: [String!]): PaginatedCriteria!
+  criterias(class_type: String, criteria_id: String, faculty_id: String, keyword: String = "", lecturer_id: String, page: Int = 0, program: String, semester_id: String, size: Int = 10, subjects: [String!]): PaginatedCriteria!
 
   """List all faculty available"""
-  faculties(class_type: String, criteria_id: String, faculty_id: String, keyword: String = "", page: Int = 0, program: String, semester_id: String, size: Int = 10, subjects: [String!]): PaginatedFaculty!
+  faculties(class_type: String, criteria_id: String, faculty_id: String, keyword: String = "", lecturer_id: String, page: Int = 0, program: String, semester_id: String, size: Int = 10, subjects: [String!]): PaginatedFaculty!
 
   """Get detail information of a faculty and its lecturer list"""
   faculty(id: String!): Faculty
 
   """List all points, group by a specific entity"""
-  groupedPoints(class_type: String, criteria_id: String, faculty_id: String, groupEntity: String = "Subject", keyword: String = "", page: Int = 0, program: String, semester_id: String, size: Int = 10, subjects: [String!]): PaginatedGroupedPoint!
+  groupedPoints(class_type: String, criteria_id: String, faculty_id: String, groupEntity: String = "Subject", keyword: String = "", lecturer_id: String, page: Int = 0, program: String, semester_id: String, size: Int = 10, subjects: [String!]): PaginatedGroupedPoint!
 
   """View detail information of a specific lecturer"""
   lecturer(id: String!): Lecturer
@@ -201,7 +203,7 @@ type Subject {
   display_name: String
   faculty: Faculty
   faculty_id: String!
-  points(class_type: String, criteria_id: String, faculty_id: String, keyword: String = "", program: String, semester_id: String, subjects: [String!]): [GroupedPoint!]!
+  points(class_type: String, criteria_id: String, faculty_id: String, keyword: String = "", lecturer_id: String, program: String, semester_id: String, subjects: [String!]): [GroupedPoint!]!
   subject_id: String!
   total_point: Float
 }

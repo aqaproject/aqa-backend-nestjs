@@ -54,9 +54,6 @@ export class LecturerService extends BaseService<Lecturer> {
   }
 
   findOne(id: string): Promise<Lecturer> {
-    return this.repo.findOne({
-      where: { lecturer_id: id },
-      relations: this.relations,
-    });
+    return this.repo.findOne({ where: { lecturer_id: id } });
   }
 }
