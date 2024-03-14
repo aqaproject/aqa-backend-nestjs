@@ -18,12 +18,9 @@ export function filterQuery<T>(
     });
 
   if (filter.faculty_id)
-    filteredQuery = filteredQuery.andWhere(
-      "Subject.faculty_id ilike '%' || :faculty_id || '%'",
-      {
-        faculty_id: filter.faculty_id,
-      },
-    );
+    filteredQuery = filteredQuery.andWhere('Faculty.faculty_id = :faculty_id', {
+      faculty_id: filter.faculty_id,
+    });
 
   if (filter.keyword)
     filteredQuery = filteredQuery.andWhere(searchString(tableName, filter));
@@ -48,6 +45,14 @@ export function filterQuery<T>(
     filteredQuery = filteredQuery.andWhere('Point.criteria_id = :criteria_id', {
       criterid_id: filter.criteria_id,
     });
+
+  if (filter.lecturer_id)
+    filteredQuery = filteredQuery.andWhere(
+      'Lecturer.lecturer_id = :lecturer_id',
+      {
+        lecturer_id: filter.lecturer_id,
+      },
+    );
 
   if (filter.class_type)
     filteredQuery = filteredQuery.andWhere('Class.class_type = :class_type', {

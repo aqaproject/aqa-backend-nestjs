@@ -24,6 +24,9 @@ export class FilterArgs {
   @Field({ nullable: true })
   class_type?: 'LT' | 'TH1' | 'TH2';
 
+  @Field({ nullable: true })
+  lecturer_id?: string;
+
   //   @Field(() => Boolean, { nullable: true, defaultValue: false })
   //   matchCase: boolean;
 
