@@ -42,7 +42,6 @@ export async function paginateByQuery<T>(
       .limit(paginationOptions.size)
       .offset(paginationOptions.page * paginationOptions.size)
       .getRawMany();
-    console.log({ data });
     return { data, meta: new PaginatedMetaData(paginationOptions, count) };
   }
 }

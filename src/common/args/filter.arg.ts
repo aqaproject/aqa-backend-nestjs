@@ -1,27 +1,28 @@
-import { ArgsType, Field } from '@nestjs/graphql';
+import { ArgsType, Field, InputType } from '@nestjs/graphql';
 
+@InputType()
 @ArgsType()
 export class FilterArgs {
   @Field({ nullable: true })
-  semester_id: string;
+  semester_id?: string;
 
   @Field({ nullable: true })
-  faculty_id: string;
+  faculty_id?: string;
 
   @Field({ nullable: true })
-  program: string;
+  program?: string;
 
   @Field({ nullable: true, defaultValue: '' })
-  keyword: string;
+  keyword?: string;
 
   @Field(() => [String], { nullable: true })
-  subjects: string[];
+  subjects?: string[];
 
   @Field({ nullable: true })
-  criteria_id: string;
+  criteria_id?: string;
 
   @Field({ nullable: true })
-  class_type: 'LT' | 'TH1' | 'TH2';
+  class_type?: 'LT' | 'TH1' | 'TH2';
 
   //   @Field(() => Boolean, { nullable: true, defaultValue: false })
   //   matchCase: boolean;

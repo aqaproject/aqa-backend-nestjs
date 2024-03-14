@@ -1,52 +1,80 @@
 import { SelectQueryBuilder } from 'typeorm';
 import { FilterArgs } from '../args/filter.arg';
+import { SortArgs } from '../args/sort.arg';
 import { searchString } from './searchString';
 
 export function filterQuery<T>(
-  tableName: string,
+  table: string | any,
   query: SelectQueryBuilder<T>,
   filter: FilterArgs,
+  sortOptions?: SortArgs,
 ) {
-  const queriedByProgram = filter.program
-    ? query.andWhere('Class.program = :program', { program: filter.program })
-    : query;
+  let filteredQuery = query;
+  const tableName = table.name ?? table;
 
-  const queriedByFaculty = filter.faculty_id
-    ? queriedByProgram.andWhere(
-        "Subject.faculty_id ilike '%' || :faculty_id || '%'",
-        {
-          faculty_id: filter.faculty_id,
-        },
-      )
-    : queriedByProgram;
+  if (filter.program)
+    filteredQuery = filteredQuery.andWhere('Class.program = :program', {
+      program: filter.program,
+    });
 
-  const queriedByKeyword = filter.keyword
-    ? queriedByFaculty.andWhere(searchString(tableName, filter))
-    : queriedByFaculty;
+  if (filter.faculty_id)
+    filteredQuery = filteredQuery.andWhere(
+      "Subject.faculty_id ilike '%' || :faculty_id || '%'",
+      {
+        faculty_id: filter.faculty_id,
+      },
+    );
 
-  const queriedBySemester = filter.semester_id
-    ? queriedByKeyword.andWhere('Semester.semester_id = :semester_id', {
+  if (filter.keyword)
+    filteredQuery = filteredQuery.andWhere(searchString(tableName, filter));
+
+  if (filter.semester_id)
+    filteredQuery = filteredQuery.andWhere(
+      'Semester.semester_id = :semester_id',
+      {
         semester_id: filter.semester_id,
-      })
-    : queriedByKeyword;
+      },
+    );
 
-  const queriedBySubject = filter.subjects
-    ? queriedBySemester.andWhere('Subject.subject_id in (:...subjects)', {
+  if (filter.subjects)
+    filteredQuery = filteredQuery.andWhere(
+      'Subject.subject_id in (:...subjects)',
+      {
         subjects: filter.subjects,
-      })
-    : queriedBySemester;
+      },
+    );
 
-  const queriedByCriteria = filter.criteria_id
-    ? queriedBySubject.andWhere('Point.criteria_id = :criteria_id', {
-        criterid_id: filter.criteria_id,
-      })
-    : queriedBySubject;
+  if (filter.criteria_id)
+    filteredQuery = filteredQuery.andWhere('Point.criteria_id = :criteria_id', {
+      criterid_id: filter.criteria_id,
+    });
 
-  const queriedByClassType = filter.class_type
-    ? queriedByCriteria.andWhere('Class.class_type = :class_type', {
-        class_type: filter.class_type,
-      })
-    : queriedByCriteria;
+  if (filter.class_type)
+    filteredQuery = filteredQuery.andWhere('Class.class_type = :class_type', {
+      class_type: filter.class_type,
+    });
 
-  return queriedByClassType;
+  if (sortOptions?.sortField) {
+    const {
+      sortField: { type },
+      isAscending,
+    } = sortOptions;
+
+    if (type == 'point') {
+      filteredQuery = filteredQuery.addOrderBy(
+        'total_point',
+        isAscending ? 'ASC' : 'DESC',
+      );
+    } else if (type == 'criteria') {
+      // If you want to sort by criteria, just filter with the criteria
+      // and sort by point, then just get the 'points' field of the subject
+    } else {
+      filteredQuery = filteredQuery.addOrderBy(
+        `${tableName}.display_name`,
+        isAscending ? 'ASC' : 'DESC',
+      );
+    }
+  }
+
+  return filteredQuery;
 }

@@ -9,7 +9,7 @@ export class Subject {
   @PrimaryColumn()
   subject_id: string;
 
-  @Field()
+  @Field({ nullable: true })
   @Column({ nullable: true })
   display_name: string;
 
