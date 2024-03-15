@@ -1,4 +1,5 @@
 import { Field, ObjectType } from '@nestjs/graphql';
+import { TotalPoint } from 'src/common/dto/total-point.dto';
 import { Lecturer } from 'src/lecturer/entities/lecturer.entity';
 import { Subject } from 'src/subject/entities/subject.entity';
 import { Column, Entity, OneToMany, PrimaryColumn } from 'typeorm';
@@ -23,4 +24,7 @@ export class Faculty {
 
   @OneToMany(() => Subject, (subject) => subject.faculty)
   subjects: Subject[];
+
+  @Field(() => TotalPoint, { nullable: true })
+  total_point: TotalPoint;
 }

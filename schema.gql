@@ -55,6 +55,7 @@ type Faculty {
   full_name: String
   lecturers(filter: FilterArgs = {}, pagination: PaginationArgs = {page: 0, size: 10}, sort: SortArgs = {}): PaginatedLecturer!
   subjects(filter: FilterArgs = {}, pagination: PaginationArgs = {page: 0, size: 10}, sort: SortArgs = {}): PaginatedSubject!
+  total_point(class_id: String, class_type: String, criteria_id: String, faculty_id: String, keyword: String = "", lecturer_id: String, program: String, semester_id: String, subjects: [String!]): TotalPoint
 }
 
 input FilterArgs {
@@ -166,7 +167,7 @@ type Query {
   criterias(filter: FilterArgs = {}, pagination: PaginationArgs = {page: 0, size: 10}, sort: SortArgs = {}): PaginatedCriteria!
 
   """List all faculty available"""
-  faculties(class_id: String, class_type: String, criteria_id: String, faculty_id: String, keyword: String = "", lecturer_id: String, page: Int = 0, program: String, semester_id: String, size: Int = 10, subjects: [String!]): PaginatedFaculty!
+  faculties(filter: FilterArgs = {}, pagination: PaginationArgs = {page: 0, size: 10}, sort: SortArgs = {}): PaginatedFaculty!
 
   """Get detail information of a faculty and its lecturer list"""
   faculty(id: String!): Faculty
@@ -211,4 +212,11 @@ type Subject {
   points(class_id: String, class_type: String, criteria_id: String, faculty_id: String, keyword: String = "", lecturer_id: String, program: String, semester_id: String, subjects: [String!]): [GroupedPoint!]!
   subject_id: String!
   total_point: Float
+}
+
+type TotalPoint {
+  average_point: Float!
+  class_num: Int!
+  max_point: Float!
+  point: Float!
 }

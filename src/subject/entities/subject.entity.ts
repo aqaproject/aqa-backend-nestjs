@@ -1,6 +1,14 @@
 import { Field, ObjectType } from '@nestjs/graphql';
+import { Class } from 'src/class/entities/class.entity';
 import { Faculty } from 'src/faculty/entities/faculty.entity';
-import { Column, Entity, JoinColumn, ManyToOne, PrimaryColumn } from 'typeorm';
+import {
+  Column,
+  Entity,
+  JoinColumn,
+  ManyToOne,
+  OneToMany,
+  PrimaryColumn,
+} from 'typeorm';
 
 @ObjectType()
 @Entity()
@@ -24,4 +32,7 @@ export class Subject {
 
   @Field({ nullable: true })
   total_point: number;
+
+  @OneToMany(() => Class, (classItem) => classItem.subject)
+  classes: Class[];
 }

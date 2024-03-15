@@ -24,14 +24,15 @@ export class PointService {
           .innerJoin('Point.criteria', 'Criteria')
           .innerJoin('Point.class', 'Class')
           .innerJoin('Class.subject', 'Subject')
+          .innerJoin('Subject.faculty', 'Faculty')
           .innerJoin('Class.lecturer', 'Lecturer')
           .innerJoin('Class.semester', 'Semester'),
         filter,
       )
         .select('AVG(Point.point / Point.max_point)', 'average_point')
-        .addSelect('AVG(Point.point / Point.max_point)', 'average_point')
         .addSelect('AVG(Point.point)', 'point')
         .addSelect('AVG(Point.max_point)', 'max_point')
+        .addSelect(`COUNT(DISTINCT(Class.class_id))`, 'class_num')
         .addSelect(`${groupEntity}.${groupEntity.toLowerCase()}_id`, 'id')
         .andWhere('Point.max_point != 0')
         .groupBy(`${groupEntity}.${groupEntity.toLowerCase()}_id`),

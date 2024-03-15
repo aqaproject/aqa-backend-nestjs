@@ -1,28 +1,40 @@
-import { Args, Parent, Query, ResolveField, Resolver } from '@nestjs/graphql';
-import { Faculty } from './entities/faculty.entity';
-import { FacultyService } from './faculty.service';
-import { PaginatedFaculty } from './dto/PaginatedFaculty';
-import { PaginationArgs } from 'src/common/args/pagination.arg';
-import { FilterArgs } from 'src/common/args/filter.arg';
-import { PaginatedLecturer } from 'src/lecturer/dto/PaginatedLecturer';
+import {
+  Args,
+  Float,
+  Parent,
+  Query,
+  ResolveField,
+  Resolver,
+} from '@nestjs/graphql';
 import { QueryArgs } from 'src/common/args/query.arg';
+import { PaginatedLecturer } from 'src/lecturer/dto/PaginatedLecturer';
 import { LecturerService } from 'src/lecturer/lecturer.service';
 import { PaginatedSubject } from 'src/subject/dto/PaginatedSubject';
 import { SubjectService } from 'src/subject/subject.service';
+import { PaginatedFaculty } from './dto/PaginatedFaculty';
+import { Faculty } from './entities/faculty.entity';
+import { FacultyService } from './faculty.service';
+import { PointService } from 'src/point/point.service';
+import { FilterArgs } from 'src/common/args/filter.arg';
+import { Logger } from '@nestjs/common';
+import { TotalPoint } from 'src/common/dto/total-point.dto';
 
 @Resolver(() => Faculty)
 export class FacultyResolver {
+  private readonly logger = new Logger(FacultyResolver.name);
+
   constructor(
     private readonly facultyService: FacultyService,
     private readonly lecturerService: LecturerService,
     private readonly subjectService: SubjectService,
+    private readonly pointService: PointService,
   ) {}
 
   @Query(() => PaginatedFaculty, {
     name: 'faculties',
     description: 'List all faculty available',
   })
-  findAll(@Args() filter: FilterArgs, @Args() pagination: PaginationArgs) {
+  findAll(@Args() { filter, pagination }: QueryArgs) {
     return this.facultyService.findAll(filter, pagination);
   }
 
@@ -49,5 +61,18 @@ export class FacultyResolver {
       ...queryArgs,
       filter: { ...queryArgs.filter, faculty_id: faculty.faculty_id },
     });
+  }
+
+  @ResolveField(() => TotalPoint)
+  async total_point(@Parent() faculty: Faculty, @Args() filter: FilterArgs) {
+    const result = await this.pointService.findAll(
+      {
+        ...filter,
+        faculty_id: faculty.faculty_id,
+      },
+      { page: 0, size: 100 },
+      'Faculty',
+    );
+    return result.data[0];
   }
 }
