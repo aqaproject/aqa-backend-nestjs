@@ -1,23 +1,19 @@
-import {
-  Args,
-  Float,
-  Parent,
-  Query,
-  ResolveField,
-  Resolver,
-} from '@nestjs/graphql';
+import { Logger } from '@nestjs/common';
+import { Args, Parent, Query, ResolveField, Resolver } from '@nestjs/graphql';
+import { FilterArgs } from 'src/common/args/filter.arg';
 import { QueryArgs } from 'src/common/args/query.arg';
 import { PaginatedLecturer } from 'src/lecturer/dto/PaginatedLecturer';
 import { LecturerService } from 'src/lecturer/lecturer.service';
+import {
+  GroupedPoint,
+  PaginatedGroupedPoint,
+} from 'src/point/dto/PaginatedGroupedPoint';
+import { PointService } from 'src/point/point.service';
 import { PaginatedSubject } from 'src/subject/dto/PaginatedSubject';
 import { SubjectService } from 'src/subject/subject.service';
 import { PaginatedFaculty } from './dto/PaginatedFaculty';
 import { Faculty } from './entities/faculty.entity';
 import { FacultyService } from './faculty.service';
-import { PointService } from 'src/point/point.service';
-import { FilterArgs } from 'src/common/args/filter.arg';
-import { Logger } from '@nestjs/common';
-import { TotalPoint } from 'src/common/dto/total-point.dto';
 
 @Resolver(() => Faculty)
 export class FacultyResolver {
@@ -63,7 +59,7 @@ export class FacultyResolver {
     });
   }
 
-  @ResolveField(() => TotalPoint)
+  @ResolveField(() => GroupedPoint)
   async total_point(@Parent() faculty: Faculty, @Args() filter: FilterArgs) {
     const result = await this.pointService.findAll(
       {
@@ -74,5 +70,18 @@ export class FacultyResolver {
       'Faculty',
     );
     return result.data[0];
+  }
+
+  @ResolveField(() => PaginatedGroupedPoint)
+  async points(@Parent() faculty: Faculty, @Args() filter: FilterArgs) {
+    const result = await this.pointService.findAll(
+      {
+        ...filter,
+        faculty_id: faculty.faculty_id,
+      },
+      { page: 0, size: 100 },
+      'Criteria',
+    );
+    return result;
   }
 }

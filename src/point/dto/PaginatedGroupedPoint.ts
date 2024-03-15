@@ -1,16 +1,19 @@
-import { Field, ObjectType } from '@nestjs/graphql';
+import { Field, Float, Int, ObjectType } from '@nestjs/graphql';
 import { Paginated } from 'src/common/dto/Paginated.dto';
 
 @ObjectType()
 export class GroupedPoint {
-  @Field()
+  @Field(() => Float)
   average_point: number;
 
-  @Field({ nullable: true })
+  @Field(() => Float, { nullable: true })
   point: number;
 
-  @Field({ nullable: true })
+  @Field(() => Float, { nullable: true })
   max_point: number;
+
+  @Field(() => Int)
+  class_num: number;
 
   @Field()
   id: string;
