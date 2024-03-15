@@ -1,6 +1,14 @@
 import { ObjectType, Field, Int } from '@nestjs/graphql';
+import { Point } from 'src/point/entities/point.entity';
 import { Semester } from 'src/semester/entities/semester.entity';
-import { Column, Entity, JoinColumn, ManyToOne, PrimaryColumn } from 'typeorm';
+import {
+  Column,
+  Entity,
+  JoinColumn,
+  ManyToOne,
+  OneToMany,
+  PrimaryColumn,
+} from 'typeorm';
 
 @ObjectType()
 @Entity()
@@ -17,8 +25,13 @@ export class Criteria {
   @Column()
   index: number;
 
-  @Field(() => Semester, { nullable: true })
   @ManyToOne(() => Semester)
   @JoinColumn({ name: 'semester_id' })
   semester: Semester;
+
+  @Column()
+  semester_id: string;
+
+  @OneToMany(() => Point, (point) => point.criteria)
+  points: Point[];
 }

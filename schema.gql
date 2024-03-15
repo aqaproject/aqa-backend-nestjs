@@ -31,7 +31,17 @@ type Criteria {
   criteria_id: String!
   display_name: String!
   index: Int
-  semester: Semester
+  semester: Semester!
+
+  """
+  This field may be wrong because I just get the first class type to determine this criteria type
+  """
+  type: [CriteriaProperty!]!
+}
+
+type CriteriaProperty {
+  class_type: String!
+  num: Int!
 }
 
 """
@@ -153,7 +163,7 @@ type Query {
   """List all comments"""
   comments(class_id: String, class_type: String, criteria_id: String, faculty_id: String, keyword: String = "", lecturer_id: String, page: Int = 0, program: String, semester_id: String, size: Int = 10, subjects: [String!]): PaginatedComment!
   criteria(id: String!): Criteria
-  criterias(class_id: String, class_type: String, criteria_id: String, faculty_id: String, keyword: String = "", lecturer_id: String, page: Int = 0, program: String, semester_id: String, size: Int = 10, subjects: [String!]): PaginatedCriteria!
+  criterias(filter: FilterArgs = {}, pagination: PaginationArgs = {page: 0, size: 10}, sort: SortArgs = {}): PaginatedCriteria!
 
   """List all faculty available"""
   faculties(class_id: String, class_type: String, criteria_id: String, faculty_id: String, keyword: String = "", lecturer_id: String, page: Int = 0, program: String, semester_id: String, size: Int = 10, subjects: [String!]): PaginatedFaculty!

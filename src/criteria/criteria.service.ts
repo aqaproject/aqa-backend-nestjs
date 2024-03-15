@@ -1,29 +1,46 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, Logger } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { FilterArgs } from 'src/common/args/filter.arg';
-import { PaginationArgs } from 'src/common/args/pagination.arg';
+import { QueryArgs } from 'src/common/args/query.arg';
+import { BaseService } from 'src/common/services/BaseService';
+import { filterQuery } from 'src/common/utils/filterQuery';
 import { paginateByQuery } from 'src/common/utils/paginate';
 import { Repository } from 'typeorm';
 import { Criteria } from './entities/criteria.entity';
-import { searchString } from 'src/common/utils/searchString';
-import { BaseService } from 'src/common/services/BaseService';
+import { Class } from 'src/class/entities/class.entity';
 
 @Injectable()
 export class CriteriaService extends BaseService<Criteria> {
-  constructor(@InjectRepository(Criteria) private repo: Repository<Criteria>) {
+  private readonly logger = new Logger(CriteriaService.name);
+
+  constructor(
+    @InjectRepository(Criteria) private repo: Repository<Criteria>,
+    @InjectRepository(Class) private classRepo: Repository<Class>,
+  ) {
     super();
   }
 
   relations = { semester: true };
 
-  async findAll(filter: FilterArgs, paginationOptions: PaginationArgs) {
+  async findAll({ filter, pagination, sort }: QueryArgs) {
     return paginateByQuery(
-      this.repo.createQueryBuilder().where(searchString('Criteria', filter)),
-      paginationOptions,
+      filterQuery<Criteria>(
+        Criteria,
+        this.repo
+          .createQueryBuilder()
+          .leftJoin('Criteria.points', 'Point')
+          .leftJoin('Point.class', 'Class')
+          .leftJoin('Criteria.semester', 'Semester'),
+        filter,
+        sort,
+      )
+        .select('Criteria.criteria_id', 'criteria_id')
+        .addSelect('Criteria.index', 'index')
+        .addSelect('Criteria.semester_id', 'semester_id')
+        .addSelect('Criteria.display_name', 'display_name')
+        .groupBy('Criteria.criteria_id'),
+      pagination,
       filter,
-      {
-        relations: this.relations,
-      },
+      { isRaw: true },
     );
   }
 
@@ -32,5 +49,18 @@ export class CriteriaService extends BaseService<Criteria> {
       where: { criteria_id: id },
       relations: this.relations,
     });
+  }
+
+  async findClassType(criteria_id: string) {
+    const criteriaProperties = await this.classRepo
+      .createQueryBuilder()
+      .leftJoin('Class.points', 'Point')
+      .where('Point.criteria_id = :criteria_id', { criteria_id })
+      .select('Class.class_type', 'class_type')
+      .addSelect('COUNT(Class.class_id)', 'num')
+      .groupBy('Class.class_type')
+      .getRawMany();
+
+    return criteriaProperties;
   }
 }

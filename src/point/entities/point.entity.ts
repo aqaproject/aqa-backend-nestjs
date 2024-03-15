@@ -27,4 +27,8 @@ export class Point {
   @JoinColumn({ name: 'criteria_id' })
   @Field(() => Criteria, { nullable: true })
   criteria: Criteria;
+
+  @Column()
+  @Field()
+  criteria_id: string;
 }
