@@ -43,7 +43,7 @@ export class FacultyResolver {
     return this.facultyService.findOne(id);
   }
 
-  @ResolveField(() => PaginatedLecturer)
+  @ResolveField(() => PaginatedLecturer, { nullable: true })
   async lecturers(@Parent() faculty: Faculty, @Args() queryArgs: QueryArgs) {
     return this.lecturerService.findAll({
       ...queryArgs,
@@ -51,7 +51,7 @@ export class FacultyResolver {
     });
   }
 
-  @ResolveField(() => PaginatedSubject)
+  @ResolveField(() => PaginatedSubject, { nullable: true })
   async subjects(@Parent() faculty: Faculty, @Args() queryArgs: QueryArgs) {
     return this.subjectService.findAll({
       ...queryArgs,
@@ -59,7 +59,7 @@ export class FacultyResolver {
     });
   }
 
-  @ResolveField(() => GroupedPoint)
+  @ResolveField(() => GroupedPoint, { nullable: true })
   async total_point(@Parent() faculty: Faculty, @Args() filter: FilterArgs) {
     const result = await this.pointService.findAll(
       {
@@ -72,7 +72,7 @@ export class FacultyResolver {
     return result.data[0];
   }
 
-  @ResolveField(() => PaginatedGroupedPoint)
+  @ResolveField(() => PaginatedGroupedPoint, { nullable: true })
   async points(@Parent() faculty: Faculty, @Args() filter: FilterArgs) {
     const result = await this.pointService.findAll(
       {

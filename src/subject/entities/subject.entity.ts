@@ -25,7 +25,6 @@ export class Subject {
   @Column()
   faculty_id: string;
 
-  @Field(() => Faculty, { nullable: true })
   @ManyToOne(() => Faculty)
   @JoinColumn({ name: 'faculty_id' })
   faculty: Faculty;

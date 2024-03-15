@@ -34,7 +34,7 @@ export class CommentService {
 
   getQuantity(filter: FilterArgs, type: string) {
     return {
-      type,
+      type: type ?? 'all',
       quantity: filterQuery<Comment>(
         'Comment',
         this.repo
@@ -44,7 +44,7 @@ export class CommentService {
           .innerJoin('Class.semester', 'Semester'),
         filter,
       )
-        .andWhere('Comment.type = :type', { type })
+        .andWhere(type ? 'Comment.type = :type' : '', { type })
         .getCount(),
     };
   }

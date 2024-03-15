@@ -5,6 +5,7 @@ import { CommentService } from './comment.service';
 import { CommentQuantity } from './dto/CommentQuantity.dto';
 import { PaginatedComment } from './dto/PaginatedComment';
 import { Comment } from './entities/comment.entity';
+import { QueryArgs } from 'src/common/args/query.arg';
 
 @Resolver(() => Comment)
 export class CommentResolver {
@@ -19,7 +20,10 @@ export class CommentResolver {
   }
 
   @Query(() => CommentQuantity, { name: 'commentQuantity' })
-  commenQuantity(@Args() filter: FilterArgs, @Args('type') type: string) {
+  commenQuantity(
+    @Args() { filter }: QueryArgs,
+    @Args('type', { nullable: true }) type: string,
+  ) {
     return this.commentService.getQuantity(filter, type);
   }
 

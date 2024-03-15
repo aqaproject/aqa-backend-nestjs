@@ -53,9 +53,9 @@ type Faculty {
   display_name: String!
   faculty_id: String!
   full_name: String
-  lecturers(filter: FilterArgs = {}, pagination: PaginationArgs = {page: 0, size: 10}, sort: SortArgs = {}): PaginatedLecturer!
+  lecturers(filter: FilterArgs = {}, pagination: PaginationArgs = {page: 0, size: 10}, sort: SortArgs = {}): PaginatedLecturer
   points(class_id: String, class_type: String, criteria_id: String, faculty_id: String, keyword: String = "", lecturer_id: String, program: String, semester_id: String, subjects: [String!]): PaginatedGroupedPoint
-  subjects(filter: FilterArgs = {}, pagination: PaginationArgs = {page: 0, size: 10}, sort: SortArgs = {}): PaginatedSubject!
+  subjects(filter: FilterArgs = {}, pagination: PaginationArgs = {page: 0, size: 10}, sort: SortArgs = {}): PaginatedSubject
   total_point(class_id: String, class_type: String, criteria_id: String, faculty_id: String, keyword: String = "", lecturer_id: String, program: String, semester_id: String, subjects: [String!]): GroupedPoint
 }
 
@@ -161,7 +161,7 @@ type Query {
 
   """View particular comment information"""
   comment(id: String!): Comment
-  commentQuantity(class_id: String, class_type: String, criteria_id: String, faculty_id: String, keyword: String = "", lecturer_id: String, program: String, semester_id: String, subjects: [String!], type: String!): CommentQuantity!
+  commentQuantity(filter: FilterArgs = {}, pagination: PaginationArgs = {page: 0, size: 10}, sort: SortArgs = {}, type: String): CommentQuantity!
 
   """List all comments"""
   comments(class_id: String, class_type: String, criteria_id: String, faculty_id: String, keyword: String = "", lecturer_id: String, page: Int = 0, program: String, semester_id: String, size: Int = 10, subjects: [String!]): PaginatedComment!
@@ -209,7 +209,7 @@ input SortFieldArgs {
 
 type Subject {
   display_name: String
-  faculty: Faculty
+  faculty: Faculty!
   faculty_id: String!
   points(class_id: String, class_type: String, criteria_id: String, faculty_id: String, keyword: String = "", lecturer_id: String, program: String, semester_id: String, subjects: [String!]): [GroupedPoint!]!
   subject_id: String!
