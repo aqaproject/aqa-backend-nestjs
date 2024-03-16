@@ -21,7 +21,7 @@ export class Subject {
   @Column({ nullable: true })
   display_name: string;
 
-  @Field()
+  @Field({ nullable: true })
   @Column()
   faculty_id: string;
 

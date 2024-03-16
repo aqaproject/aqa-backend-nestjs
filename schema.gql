@@ -193,8 +193,8 @@ type Query {
 type Semester {
   display_name: String!
   semester_id: String!
-  type: String!
-  year: String!
+  type: String
+  year: String
 }
 
 input SortArgs {
@@ -209,9 +209,9 @@ input SortFieldArgs {
 
 type Subject {
   display_name: String
-  faculty: Faculty!
-  faculty_id: String!
-  points(class_id: String, class_type: String, criteria_id: String, faculty_id: String, keyword: String = "", lecturer_id: String, program: String, semester_id: String, subjects: [String!]): [GroupedPoint!]!
+  faculty: Faculty
+  faculty_id: String
+  points(class_id: String, class_type: String, criteria_id: String, faculty_id: String, keyword: String = "", lecturer_id: String, program: String, semester_id: String, subjects: [String!]): [GroupedPoint!]
   subject_id: String!
   total_point: Float
 }

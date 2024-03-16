@@ -13,10 +13,10 @@ export class Semester {
   display_name: string;
 
   @Column()
-  @Field()
+  @Field({ nullable: true })
   type: string;
 
   @Column()
-  @Field()
+  @Field({ nullable: true })
   year: string;
 }

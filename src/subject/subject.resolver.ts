@@ -27,7 +27,7 @@ export class SubjectResolver {
     return this.subjectService.findOne(id);
   }
 
-  @ResolveField(() => [GroupedPoint])
+  @ResolveField(() => [GroupedPoint], { nullable: true })
   async points(@Parent() subject: Subject, @Args() filter: FilterArgs) {
     const { subject_id } = subject;
     const result = await this.pointService.findAll(
@@ -38,7 +38,7 @@ export class SubjectResolver {
     return result.data;
   }
 
-  @ResolveField(() => Faculty)
+  @ResolveField(() => Faculty, { nullable: true })
   async faculty(@Parent() subject: Subject) {
     const { faculty_id } = subject;
     return this.facultyService.findOne(faculty_id);

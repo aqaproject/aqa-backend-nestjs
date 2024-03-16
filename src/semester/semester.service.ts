@@ -8,7 +8,7 @@ export class SemesterService {
   constructor(@InjectRepository(Semester) private repo: Repository<Semester>) {}
 
   async findAll() {
-    return this.repo.find();
+    return (await this.repo.find()).reverse();
   }
 
   async findOne(id: string) {
