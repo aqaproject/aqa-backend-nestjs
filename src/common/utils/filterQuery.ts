@@ -23,7 +23,9 @@ export function filterQuery<T>(
     });
 
   if (filter.keyword)
-    filteredQuery = filteredQuery.andWhere(searchString(tableName, filter));
+    filteredQuery = filteredQuery.andWhere(searchString(tableName, filter), {
+      keyword: filter.keyword,
+    });
 
   if (filter.semester_id)
     filteredQuery = filteredQuery.andWhere(

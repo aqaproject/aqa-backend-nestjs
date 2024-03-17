@@ -1,11 +1,9 @@
 import { Args, Query, Resolver } from '@nestjs/graphql';
-import { FilterArgs } from 'src/common/args/filter.arg';
-import { PaginationArgs } from 'src/common/args/pagination.arg';
+import { QueryArgs } from 'src/common/args/query.arg';
 import { CommentService } from './comment.service';
 import { CommentQuantity } from './dto/CommentQuantity.dto';
 import { PaginatedComment } from './dto/PaginatedComment';
 import { Comment } from './entities/comment.entity';
-import { QueryArgs } from 'src/common/args/query.arg';
 
 @Resolver(() => Comment)
 export class CommentResolver {
@@ -15,8 +13,11 @@ export class CommentResolver {
     name: 'comments',
     description: 'List all comments',
   })
-  findAll(@Args() filter: FilterArgs, @Args() pagination: PaginationArgs) {
-    return this.commentService.findAll(filter, pagination);
+  findAll(
+    @Args() { filter, pagination }: QueryArgs,
+    @Args('type', { nullable: true }) type: string,
+  ) {
+    return this.commentService.findAll(filter, pagination, type);
   }
 
   @Query(() => CommentQuantity, { name: 'commentQuantity' })

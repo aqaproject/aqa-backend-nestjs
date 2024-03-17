@@ -11,7 +11,7 @@ import { Comment } from './entities/comment.entity';
 export class CommentService {
   constructor(@InjectRepository(Comment) private repo: Repository<Comment>) {}
 
-  findAll(filter: FilterArgs, paginationOptions: PaginationArgs) {
+  findAll(filter: FilterArgs, paginationOptions: PaginationArgs, type: string) {
     return paginateByQuery(
       filterQuery<Comment>(
         'Comment',
@@ -21,7 +21,9 @@ export class CommentService {
           .innerJoin('Class.subject', 'Subject')
           .innerJoin('Class.semester', 'Semester'),
         filter,
-      ),
+      ).andWhere(type && type != 'all' ? 'Comment.type = :type' : 'true', {
+        type,
+      }),
       paginationOptions,
       filter,
       {
@@ -32,20 +34,23 @@ export class CommentService {
     );
   }
 
-  getQuantity(filter: FilterArgs, type: string) {
+  async getQuantity(filter: FilterArgs, type: string) {
     return {
       type: type ?? 'all',
-      quantity: filterQuery<Comment>(
-        'Comment',
-        this.repo
-          .createQueryBuilder()
-          .innerJoin('Comment.class', 'Class')
-          .innerJoin('Class.subject', 'Subject')
-          .innerJoin('Class.semester', 'Semester'),
-        filter,
-      )
-        .andWhere(type ? 'Comment.type = :type' : '', { type })
-        .getCount(),
+      quantity:
+        (await filterQuery<Comment>(
+          'Comment',
+          this.repo
+            .createQueryBuilder()
+            .innerJoin('Comment.class', 'Class')
+            .innerJoin('Class.subject', 'Subject')
+            .innerJoin('Class.semester', 'Semester'),
+          filter,
+        )
+          .andWhere(type && type != 'all' ? 'Comment.type = :type' : 'true', {
+            type,
+          })
+          .getCount()) || 0,
     };
   }
 
