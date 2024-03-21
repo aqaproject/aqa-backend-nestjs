@@ -15,6 +15,8 @@ import { SubjectModule } from './subject/subject.module';
 import { CriteriaModule } from './criteria/criteria.module';
 import { CommentModule } from './comment/comment.module';
 import { PointModule } from './point/point.module';
+import { UserModule } from './user/user.module';
+import { AuthModule } from './auth/auth.module';
 
 @Module({
   imports: [
@@ -34,6 +36,8 @@ import { PointModule } from './point/point.module';
       synchronize: false,
       autoLoadEntities: true,
     }),
+    UserModule,
+    AuthModule,
     FacultyModule,
     LecturerModule,
     SemesterModule,
