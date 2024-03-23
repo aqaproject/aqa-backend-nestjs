@@ -99,6 +99,10 @@ type Lecturer {
   username: String
 }
 
+type Mutation {
+  register(user: UserDto!): UserEntity!
+}
+
 type PaginatedClass {
   data: [Class!]!
   meta: PaginatedMetaData!
@@ -214,4 +218,17 @@ type Subject {
   points(class_id: String, class_type: String, criteria_id: String, faculty_id: String, keyword: String = "", lecturer_id: String, program: String, semester_id: String, subjects: [String!]): [GroupedPoint!]
   subject_id: String!
   total_point: Float
+}
+
+input UserDto {
+  password: String!
+  role: String!
+  username: String!
+}
+
+type UserEntity {
+  id: String!
+  password: String!
+  role: String!
+  username: String!
 }
