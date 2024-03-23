@@ -1,19 +1,16 @@
 import { Field, ObjectType } from '@nestjs/graphql';
 import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
-import { UUID } from 'typeorm/driver/mongodb/bson.typings';
-import { Role } from '../enums/role.enum';
-import { Injectable } from '@nestjs/common';
 
 @ObjectType()
 @Entity()
 export class UserEntity {
-  @Field(() => UUID)
+  @Field(() => String)
   @PrimaryGeneratedColumn()
-  id: UUID;
+  id: string;
 
-  @Field(() => Role)
+  @Field(() => String)
   @Column()
-  role: Role;
+  role: string;
 
   @Field(() => String)
   @Column()
@@ -22,4 +19,5 @@ export class UserEntity {
   @Field(() => String)
   @Column()
   password: string;
+
 }
