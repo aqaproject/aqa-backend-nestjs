@@ -1,13 +1,12 @@
 import { Args, Parent, Query, ResolveField, Resolver } from '@nestjs/graphql';
-import { FilterArgs } from 'src/common/args/filter.arg';
-import { QueryArgs as QueryArgs } from 'src/common/args/query.arg';
+import { QueryArgs } from 'src/common/args/query.arg';
+import { Faculty } from 'src/faculty/entities/faculty.entity';
+import { FacultyService } from 'src/faculty/faculty.service';
 import { GroupedPoint } from 'src/point/dto/PaginatedGroupedPoint';
 import { PointService } from 'src/point/point.service';
 import { PaginatedSubject } from './dto/PaginatedSubject';
 import { Subject } from './entities/subject.entity';
 import { SubjectService } from './subject.service';
-import { FacultyService } from 'src/faculty/faculty.service';
-import { Faculty } from 'src/faculty/entities/faculty.entity';
 
 @Resolver(() => Subject)
 export class SubjectResolver {
@@ -28,7 +27,7 @@ export class SubjectResolver {
   }
 
   @ResolveField(() => [GroupedPoint], { nullable: true })
-  async points(@Parent() subject: Subject, @Args() filter: FilterArgs) {
+  async points(@Parent() subject: Subject, @Args() { filter }: QueryArgs) {
     const { subject_id } = subject;
     const result = await this.pointService.findAll(
       { ...filter, subjects: [subject_id] },
