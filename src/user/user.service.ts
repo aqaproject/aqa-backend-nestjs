@@ -13,4 +13,12 @@ export class UserService {
   async create(user: UserDto): Promise<UserEntity> {
     return this.userRepo.save(user);
   }
+
+  async findByUsername(username: string) {
+    return this.userRepo.findOneBy({ username });
+  }
+
+  async findById(id: string) {
+    return this.userRepo.findOneBy({ id });
+  }
 }
