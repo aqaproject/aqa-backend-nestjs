@@ -171,6 +171,7 @@ type Query {
   comments(filter: FilterArgs = {}, pagination: PaginationArgs = {page: 0, size: 10}, sort: SortArgs = {}, type: String): PaginatedComment!
   criteria(id: String!): Criteria
   criterias(filter: FilterArgs = {}, pagination: PaginationArgs = {page: 0, size: 10}, sort: SortArgs = {}): PaginatedCriteria!
+  currentUser: UserEntity!
 
   """List all faculty available"""
   faculties(filter: FilterArgs = {}, pagination: PaginationArgs = {page: 0, size: 10}, sort: SortArgs = {}): PaginatedFaculty!
@@ -186,6 +187,7 @@ type Query {
 
   """List all lecturer"""
   lecturers(filter: FilterArgs = {}, pagination: PaginationArgs = {page: 0, size: 10}, sort: SortArgs = {}): PaginatedLecturer!
+  login(password: String!, username: String!): UserEntity!
   programs: [Program!]!
 
   """List all semester"""
