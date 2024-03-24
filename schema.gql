@@ -36,7 +36,7 @@ type Criteria {
   criteria_id: String!
   display_name: String!
   index: Int
-  semester: Semester!
+  semester: [Semester!]!
 
   """
   This field may be wrong because I just get the first class type to determine this criteria type

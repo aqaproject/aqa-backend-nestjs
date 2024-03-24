@@ -23,9 +23,9 @@ export class CriteriaResolver {
     return this.criteriaService.findOne(id);
   }
 
-  @ResolveField(() => Semester)
+  @ResolveField(() => [Semester])
   async semester(@Parent() criteria: Criteria) {
-    return this.semesterService.findOne(criteria.semester_id);
+    return this.semesterService.findByCriteria(criteria.criteria_id);
   }
 
   @ResolveField(() => [CriteriaProperty], {

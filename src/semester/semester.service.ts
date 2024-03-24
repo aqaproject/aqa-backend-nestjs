@@ -14,4 +14,15 @@ export class SemesterService {
   async findOne(id: string) {
     return this.repo.findOne({ where: { semester_id: id } });
   }
+
+  async findByCriteria(criteria_id: string): Promise<Semester[]> {
+    return this.repo
+      .createQueryBuilder()
+      .leftJoin('Class', 'Class', 'Class.semester_id = Semester.semester_id')
+      .leftJoin('Class.points', 'Point')
+      .leftJoin('Point.criteria', 'Criteria')
+      .where('Criteria.criteria_id = :criteria_id', { criteria_id })
+      .groupBy('Semester.semester_id')
+      .getMany();
+  }
 }
