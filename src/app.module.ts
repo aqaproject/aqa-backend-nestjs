@@ -6,18 +6,18 @@ import { join } from 'path';
 import { DataSource } from 'typeorm';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
+import { AuthModule } from './auth/auth.module';
+import { ClassModule } from './class/class.module';
+import { CommentModule } from './comment/comment.module';
+import { CriteriaModule } from './criteria/criteria.module';
 import { FacultyModule } from './faculty/faculty.module';
 import { LecturerModule } from './lecturer/lecturer.module';
-import { SemesterModule } from './semester/semester.module';
-import { ClassModule } from './class/class.module';
-import { ProgramModule } from './program/program.module';
-import { SubjectModule } from './subject/subject.module';
-import { CriteriaModule } from './criteria/criteria.module';
-import { CommentModule } from './comment/comment.module';
-import { PointModule } from './point/point.module';
-import { UserModule } from './user/user.module';
-import { AuthModule } from './auth/auth.module';
 import { PermissionModule } from './permission/permission.module';
+import { PointModule } from './point/point.module';
+import { ProgramModule } from './program/program.module';
+import { SemesterModule } from './semester/semester.module';
+import { SubjectModule } from './subject/subject.module';
+import { UserModule } from './user/user.module';
 
 @Module({
   imports: [

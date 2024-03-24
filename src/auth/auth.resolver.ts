@@ -1,14 +1,12 @@
 import { UnauthorizedException, UseGuards } from '@nestjs/common';
-import { Args, Mutation, Query, Resolver } from '@nestjs/graphql';
-import { AuthService } from './auth.service';
+import { Args, Query, Resolver } from '@nestjs/graphql';
 import { JwtService } from '@nestjs/jwt';
-import { AuthEntity } from './entities/auth.entity';
+import { CurrentUser } from 'src/user/decorator/user.decorator';
+import { UserEntity } from 'src/user/entities/user.entity';
+import { UserService } from 'src/user/user.service';
+import { AuthService } from './auth.service';
 import { RequestUserDto } from './dto/user.dto';
 import { JwtAuthGuard } from './guards/jwt-auth.guard';
-import { UserEntity } from 'src/user/entities/user.entity';
-import { CurrentUser } from 'src/user/decorator/user.decorator';
-import { UserService } from 'src/user/user.service';
-import { validate } from 'graphql';
 
 @Resolver()
 export class AuthResolver {
