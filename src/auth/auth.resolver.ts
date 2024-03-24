@@ -7,6 +7,7 @@ import { UserService } from 'src/user/user.service';
 import { AuthService } from './auth.service';
 import { RequestUserDto } from './dto/user.dto';
 import { JwtAuthGuard } from './guards/jwt-auth.guard';
+import { AuthDto } from './dto/auth.dto';
 
 @Resolver()
 export class AuthResolver {
@@ -16,12 +17,14 @@ export class AuthResolver {
     private userService: UserService,
   ) {}
 
-  @Query(() => UserEntity)
+  @Query(() => AuthDto)
   async login(@Args() credential: RequestUserDto) {
-    const user = this.authService.validateUser(credential);
-    if (user) return user;
+    const user = await this.authService.validateUser(credential);
+    if (user) return this.authService.login(user);
     else throw new UnauthorizedException();
   }
+
+
 
   @UseGuards(JwtAuthGuard)
   @Query(() => UserEntity)
