@@ -2,6 +2,11 @@
 # THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
 # ------------------------------------------------------
 
+type AuthDto {
+  access_token: String!
+  user: UserEntity!
+}
+
 type Class {
   class_id: String!
   class_type: String!
@@ -187,7 +192,7 @@ type Query {
 
   """List all lecturer"""
   lecturers(filter: FilterArgs = {}, pagination: PaginationArgs = {page: 0, size: 10}, sort: SortArgs = {}): PaginatedLecturer!
-  login(password: String!, username: String!): UserEntity!
+  login(password: String!, username: String!): AuthDto!
   programs: [Program!]!
 
   """List all semester"""
