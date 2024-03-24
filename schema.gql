@@ -79,6 +79,7 @@ input FilterArgs {
 type GroupedPoint {
   average_point: Float!
   class_num: Int!
+  display_name: String
   id: String!
   max_point: Float
   point: Float
@@ -98,7 +99,7 @@ type Lecturer {
   mscb: Int
   ngach: String
   phone: String
-  points(class_id: String, class_type: String, criteria_id: String, faculty_id: String, keyword: String = "", lecturer_id: String, program: String, semester_id: String, subjects: [String!]): [GroupedPoint!]!
+  points(filter: FilterArgs = {}, pagination: PaginationArgs = {page: 0, size: 10}, sort: SortArgs = {}): [GroupedPoint!]!
   position: String
   total_point: Float
   username: String

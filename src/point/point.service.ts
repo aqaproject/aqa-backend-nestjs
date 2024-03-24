@@ -21,18 +21,19 @@ export class PointService {
         'Point',
         this.repo
           .createQueryBuilder()
-          .innerJoin('Point.criteria', 'Criteria')
           .innerJoin('Point.class', 'Class')
           .innerJoin('Class.subject', 'Subject')
+          .innerJoin('Class.semester', 'Semester')
+          .innerJoin('Point.criteria', 'Criteria')
           .innerJoin('Subject.faculty', 'Faculty')
-          .innerJoin('Class.lecturer', 'Lecturer')
-          .innerJoin('Class.semester', 'Semester'),
-        filter,
+          .innerJoin('Class.lecturer', 'Lecturer'),
+        { ...filter, keyword: '', criteria_id: '' },
       )
         .select('AVG(Point.point / Point.max_point)', 'average_point')
         .addSelect('AVG(Point.point)', 'point')
         .addSelect('AVG(Point.max_point)', 'max_point')
         .addSelect(`COUNT(DISTINCT(Class.class_id))`, 'class_num')
+        .addSelect(`${groupEntity}.display_name`, 'display_name')
         .addSelect(`${groupEntity}.${groupEntity.toLowerCase()}_id`, 'id')
         .andWhere('Point.max_point != 0')
         .groupBy(`${groupEntity}.${groupEntity.toLowerCase()}_id`),

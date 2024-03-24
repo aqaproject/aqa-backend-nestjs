@@ -17,6 +17,9 @@ export class GroupedPoint {
 
   @Field()
   id: string;
+
+  @Field({ nullable: true })
+  display_name: string;
 }
 
 @ObjectType()

@@ -38,7 +38,7 @@ export class LecturerResolver {
   }
 
   @ResolveField(() => [GroupedPoint])
-  async points(@Parent() lecturer: Lecturer, @Args() filter: FilterArgs) {
+  async points(@Parent() lecturer: Lecturer, @Args() { filter }: QueryArgs) {
     const { lecturer_id } = lecturer;
     const result = await this.pointService.findAll(
       { ...filter, lecturer_id },

@@ -26,7 +26,8 @@ export class SubjectService extends BaseService<Subject> {
           .leftJoin(Class, 'Class', 'Class.subject_id = Subject.subject_id')
           .leftJoin(Point, 'Point', 'Point.class_id = Class.class_id')
           .leftJoin('Subject.faculty', 'Faculty')
-          .leftJoin('Class.semester', 'Semester'),
+          .leftJoin('Class.semester', 'Semester')
+          .innerJoin('Class.lecturer', 'Lecturer'),
         filter,
         sort,
       )
