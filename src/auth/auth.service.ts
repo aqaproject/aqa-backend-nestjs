@@ -1,14 +1,11 @@
 import {
-  Injectable,
-  NotFoundException,
-  UnauthorizedException,
+    Injectable,
+    UnauthorizedException
 } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
+import { UserEntity } from 'src/user/entities/user.entity';
 import { UserService } from 'src/user/user.service';
 import { RequestUserDto } from './dto/user.dto';
-import { response } from 'express';
-import { AuthEntity } from './entities/auth.entity';
-import { UserEntity } from 'src/user/entities/user.entity';
 
 @Injectable()
 export class AuthService {
