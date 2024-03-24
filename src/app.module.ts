@@ -17,6 +17,7 @@ import { CommentModule } from './comment/comment.module';
 import { PointModule } from './point/point.module';
 import { UserModule } from './user/user.module';
 import { AuthModule } from './auth/auth.module';
+import { PermissionModule } from './permission/permission.module';
 
 @Module({
   imports: [
@@ -36,6 +37,7 @@ import { AuthModule } from './auth/auth.module';
       synchronize: false,
       autoLoadEntities: true,
     }),
+    PermissionModule,
     UserModule,
     AuthModule,
     FacultyModule,
