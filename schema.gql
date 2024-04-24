@@ -37,10 +37,6 @@ type Criteria {
   display_name: String!
   index: Int
   semester: [Semester!]!
-
-  """
-  This field may be wrong because I just get the first class type to determine this criteria type
-  """
   type: [CriteriaProperty!]!
 }
 

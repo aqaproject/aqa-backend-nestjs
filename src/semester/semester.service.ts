@@ -21,7 +21,7 @@ export class SemesterService {
       .leftJoin('Class', 'Class', 'Class.semester_id = Semester.semester_id')
       .leftJoin('Class.points', 'Point')
       .leftJoin('Point.criteria', 'Criteria')
-      .where('Criteria.criteria_id = :criteria_id', { criteria_id })
+      .where('Point.criteria_id = :criteria_id', { criteria_id })
       .groupBy('Semester.semester_id')
       .getMany();
   }

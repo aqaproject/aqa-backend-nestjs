@@ -28,10 +28,7 @@ export class CriteriaResolver {
     return this.semesterService.findByCriteria(criteria.criteria_id);
   }
 
-  @ResolveField(() => [CriteriaProperty], {
-    description:
-      'This field may be wrong because I just get the first class type to determine this criteria type',
-  })
+  @ResolveField(() => [CriteriaProperty])
   async type(@Parent() criteria: Criteria) {
     return this.criteriaService.findClassType(criteria.criteria_id);
   }

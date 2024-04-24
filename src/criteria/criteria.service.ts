@@ -57,7 +57,7 @@ export class CriteriaService extends BaseService<Criteria> {
       .leftJoin('Class.points', 'Point')
       .where('Point.criteria_id = :criteria_id', { criteria_id })
       .select('Class.class_type', 'class_type')
-      .addSelect('COUNT(Class.class_id)', 'num')
+      .addSelect('COUNT(DISTINCT Class.class_id)', 'num')
       .groupBy('Class.class_type')
       .getRawMany();
 
