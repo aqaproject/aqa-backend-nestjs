@@ -27,7 +27,7 @@ export class PointService {
           .innerJoin('Point.criteria', 'Criteria')
           .innerJoin('Subject.faculty', 'Faculty')
           .innerJoin('Class.lecturer', 'Lecturer'),
-        { ...filter, keyword: '', criteria_id: '' },
+        { ...filter, keyword: '' },
       )
         .select('AVG(Point.point / Point.max_point)', 'average_point')
         .addSelect('AVG(Point.point)', 'point')
