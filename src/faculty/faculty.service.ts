@@ -27,7 +27,7 @@ export class FacultyService extends BaseService<Faculty> {
         Faculty,
         this.repo
           .createQueryBuilder()
-          .leftJoin('Faculty.subjects', 'Subject')
+          .innerJoin('Faculty.subjects', 'Subject')
           .leftJoin('Subject.classes', 'Class')
           .leftJoin('Class.lecturer', 'Lecturer')
           .leftJoin('Class.points', 'Point')
