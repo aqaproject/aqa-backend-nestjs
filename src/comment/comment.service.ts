@@ -19,7 +19,9 @@ export class CommentService {
           .createQueryBuilder()
           .innerJoin('Comment.class', 'Class')
           .innerJoin('Class.subject', 'Subject')
-          .innerJoin('Class.semester', 'Semester'),
+          .innerJoin('Subject.faculty', 'Faculty')
+          .innerJoin('Class.semester', 'Semester')
+          .innerJoin('Class.lecturer', 'Lecturer'),
         filter,
       ).andWhere(type && type != 'all' ? 'Comment.type = :type' : 'true', {
         type,
@@ -44,7 +46,9 @@ export class CommentService {
             .createQueryBuilder()
             .innerJoin('Comment.class', 'Class')
             .innerJoin('Class.subject', 'Subject')
-            .innerJoin('Class.semester', 'Semester'),
+            .innerJoin('Subject.faculty', 'Faculty')
+            .innerJoin('Class.semester', 'Semester')
+            .innerJoin('Class.lecturer', 'Lecturer'),
           filter,
         )
           .andWhere(type && type != 'all' ? 'Comment.type = :type' : 'true', {
