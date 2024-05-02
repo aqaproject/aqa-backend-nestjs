@@ -1,5 +1,5 @@
 import { UnauthorizedException, UseGuards } from '@nestjs/common';
-import { Args, Query, Resolver } from '@nestjs/graphql';
+import { Args, Mutation, Query, Resolver } from '@nestjs/graphql';
 import { JwtService } from '@nestjs/jwt';
 import { CurrentUser } from 'src/user/decorator/user.decorator';
 import { UserEntity } from 'src/user/entities/user.entity';
@@ -17,14 +17,12 @@ export class AuthResolver {
     private userService: UserService,
   ) {}
 
-  @Query(() => AuthDto)
+  @Mutation(() => AuthDto)
   async login(@Args() credential: RequestUserDto) {
     const user = await this.authService.validateUser(credential);
     if (user) return this.authService.login(user);
     else throw new UnauthorizedException();
   }
-
-
 
   @UseGuards(JwtAuthGuard)
   @Query(() => UserEntity)

@@ -103,6 +103,7 @@ type Lecturer {
 }
 
 type Mutation {
+  login(password: String!, username: String!): AuthDto!
   register(user: UserDto!): UserEntity!
 }
 
@@ -190,7 +191,6 @@ type Query {
 
   """List all lecturer"""
   lecturers(filter: FilterArgs = {}, pagination: PaginationArgs = {page: 0, size: 10}, sort: SortArgs = {}): PaginatedLecturer!
-  login(password: String!, username: String!): AuthDto!
   programs: [Program!]!
 
   """List all semester"""
