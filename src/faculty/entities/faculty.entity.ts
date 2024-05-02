@@ -22,6 +22,10 @@ export class Faculty {
   @Field({ nullable: true })
   full_name: string;
 
+  @Column({ default: true })
+  @Field(() => Boolean, { nullable: true, defaultValue: true })
+  is_displayed: boolean;
+
   @OneToMany(() => Lecturer, (lecturer) => lecturer.faculty)
   lecturers: Lecturer[];
 

@@ -88,5 +88,5 @@ export function filterQuery<T>(
     }
   }
 
-  return filteredQuery;
+  return filteredQuery.andWhere('Faculty.is_displayed = true');
 }
