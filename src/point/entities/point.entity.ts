@@ -1,4 +1,4 @@
-import { ObjectType, Field, Int } from '@nestjs/graphql';
+import { ObjectType, Field, Int, Float } from '@nestjs/graphql';
 import { Class } from 'src/class/entities/class.entity';
 import { Criteria } from 'src/criteria/entities/criteria.entity';
 import { Column, Entity, JoinColumn, ManyToOne, PrimaryColumn } from 'typeorm';
@@ -14,8 +14,8 @@ export class Point {
   @Field(() => Int)
   max_point: number;
 
-  @Column()
-  @Field(() => Int)
+  @Column({ type: 'float' })
+  @Field(() => Float)
   point: number;
 
   @ManyToOne(() => Class)

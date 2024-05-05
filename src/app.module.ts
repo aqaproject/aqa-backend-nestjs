@@ -33,7 +33,7 @@ import { UserModule } from './user/user.module';
       port: 5432,
       username: 'postgres',
       password: 'jnhbgvfc',
-      database: 'aqa2',
+      database: 'aqa',
       synchronize: true,
       autoLoadEntities: true,
     }),

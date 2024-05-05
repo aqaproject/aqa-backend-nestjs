@@ -18,7 +18,7 @@ export class Faculty {
   @Field()
   display_name: string;
 
-  @Column()
+  @Column({ nullable: true })
   @Field({ nullable: true })
   full_name: string;
 

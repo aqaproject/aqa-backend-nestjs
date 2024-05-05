@@ -17,15 +17,15 @@ export class Lecturer {
   @Field()
   lecturer_id: string;
 
-  @Column()
+  @Column({ nullable: true })
   @Field({ nullable: true })
   display_name: string;
 
-  @Column()
+  @Column({ nullable: true })
   @Field(() => Int, { nullable: true })
   mscb: string;
 
-  @Column()
+  @Column({ nullable: true })
   @Field({ nullable: true })
   faculty_id: string;
 
@@ -34,39 +34,39 @@ export class Lecturer {
   // @Field(() => Faculty, { nullable: true })
   faculty: Faculty;
 
-  @Column()
+  @Column({ nullable: true })
   @Field({ nullable: true })
   username: string;
 
-  @Column()
+  @Column({ nullable: true })
   @Field({ nullable: true })
   learning_position: string;
 
-  @Column()
+  @Column({ nullable: true })
   @Field({ nullable: true })
   birth_date: Date;
 
-  @Column()
+  @Column({ nullable: true })
   @Field(() => Boolean, { nullable: true })
   gender: boolean;
 
-  @Column()
+  @Column({ nullable: true })
   @Field({ nullable: true })
   learning: string;
 
-  @Column()
+  @Column({ nullable: true })
   @Field({ nullable: true })
   email: string;
 
-  @Column()
+  @Column({ nullable: true })
   @Field({ nullable: true })
   phone: string;
 
-  @Column()
+  @Column({ nullable: true })
   @Field({ nullable: true })
   ngach: string;
 
-  @Column()
+  @Column({ nullable: true })
   @Field({ nullable: true })
   position: string;
 

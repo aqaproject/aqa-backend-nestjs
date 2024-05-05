@@ -22,14 +22,14 @@ export class Criteria {
   display_name: string;
 
   @Field(() => Int, { nullable: true })
-  @Column()
+  @Column({ nullable: true })
   index: number;
 
   @ManyToOne(() => Semester)
   @JoinColumn({ name: 'semester_id' })
   semester: Semester;
 
-  @Column()
+  @Column({ nullable: true })
   semester_id: string;
 
   @OneToMany(() => Point, (point) => point.criteria)
