@@ -199,6 +199,12 @@ type Query {
   subjects(filter: FilterArgs = {}, pagination: PaginationArgs = {page: 0, size: 10}, sort: SortArgs = {}): PaginatedSubject!
 }
 
+enum Role {
+  ADMIN
+  FACULTY
+  LECTURER
+}
+
 type Semester {
   display_name: String!
   semester_id: String!
@@ -227,13 +233,13 @@ type Subject {
 
 input UserDto {
   password: String!
-  role: String!
+  role: Role!
   username: String!
 }
 
 type UserEntity {
   id: String!
   password: String!
-  role: String!
+  role: Role!
   username: String!
 }
