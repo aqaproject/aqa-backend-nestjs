@@ -191,6 +191,7 @@ type Query {
 
   """List all lecturer"""
   lecturers(filter: FilterArgs = {}, pagination: PaginationArgs = {page: 0, size: 10}, sort: SortArgs = {}): PaginatedLecturer!
+  profile: UserEntity!
   programs: [Program!]!
 
   """List all semester"""
