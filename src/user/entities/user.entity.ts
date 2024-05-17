@@ -14,6 +14,10 @@ export class UserEntity {
   role: string;
 
   @Field(() => String)
+  @Column({ default: '', nullable: true })
+  displayName: string;
+
+  @Field(() => String)
   @Column()
   username: string;
 

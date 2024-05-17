@@ -233,12 +233,14 @@ type Subject {
 }
 
 input UserDto {
+  displayName: String = ""
   password: String!
   role: Role!
   username: String!
 }
 
 type UserEntity {
+  displayName: String!
   id: String!
   password: String!
   role: Role!

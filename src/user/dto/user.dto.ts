@@ -6,6 +6,9 @@ export class UserDto {
   @Field(() => Role)
   role: Role;
 
+  @Field(() => String, { nullable: true, defaultValue: '' })
+  displayName: string;
+
   @Field(() => String)
   username: string;
 
