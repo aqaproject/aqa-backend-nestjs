@@ -29,7 +29,9 @@ export class CriteriaService extends BaseService<Criteria> {
           .createQueryBuilder()
           .leftJoin('Criteria.points', 'Point')
           .leftJoin('Point.class', 'Class')
-          .leftJoin('Criteria.semester', 'Semester'),
+          .leftJoin('Criteria.semester', 'Semester')
+          .leftJoin('Class.subject', 'Subject')
+          .leftJoin('Subject.faculty', 'Faculty'),
         filter,
         sort,
       )
