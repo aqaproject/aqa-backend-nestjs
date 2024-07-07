@@ -1,0 +1,29 @@
+services:
+  db:
+    image: postgres:latest
+    restart: always
+    environment:
+      POSTGRES_PASSWORD: jnhbgvfc
+      POSTGRES_DB: aqa
+      POSTGRES_USER: postgres
+    ports:
+      - 5432:5432
+    volumes:
+      - postgresql-volume:/var/lib/postgresql/data
+    networks:
+      - postgresql
+
+  web:
+    build: .
+    ports:
+      - 3001:3001
+    depends_on:
+      - db
+    networks:
+      - postgresql
+
+networks:
+  postgresql:
+volumes:
+  postgresql-volume:
+    external: true
