@@ -6,11 +6,11 @@ import { Role } from '../enums/role.enum';
 @Entity()
 export class UserEntity {
   @Field(() => String)
-  @PrimaryGeneratedColumn()
+  @PrimaryGeneratedColumn('uuid')
   id: string;
 
   @Field(() => Role)
-  @Column()
+  @Column({ type: 'enum', enum: Object.values(Role) })
   role: string;
 
   @Field(() => String)

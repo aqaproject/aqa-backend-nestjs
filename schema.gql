@@ -105,6 +105,7 @@ type Lecturer {
 type Mutation {
   login(password: String!, username: String!): AuthDto!
   register(user: UserDto!): UserEntity!
+  update(user: UpdateUserDto!): UserEntity!
 }
 
 type PaginatedClass {
@@ -230,6 +231,14 @@ type Subject {
   points(filter: FilterArgs = {}, pagination: PaginationArgs = {page: 0, size: 10}, sort: SortArgs = {}): [GroupedPoint!]
   subject_id: String!
   total_point: Float
+}
+
+input UpdateUserDto {
+  displayName: String = ""
+  id: String!
+  password: String!
+  role: Role!
+  username: String!
 }
 
 input UserDto {

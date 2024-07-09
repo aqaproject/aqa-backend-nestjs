@@ -1,10 +1,11 @@
+import { UseGuards } from '@nestjs/common';
 import { Args, Mutation, Query, Resolver } from '@nestjs/graphql';
+import { JwtAuthGuard } from 'src/auth/guards/jwt-auth.guard';
+import { CurrentUser } from './decorator/user.decorator';
+import { UpdateUserDto } from './dto/update-user.dto';
 import { UserDto } from './dto/user.dto';
 import { UserEntity } from './entities/user.entity';
 import { UserService } from './user.service';
-import { CurrentUser } from './decorator/user.decorator';
-import { UseGuards } from '@nestjs/common';
-import { JwtAuthGuard } from 'src/auth/guards/jwt-auth.guard';
 
 @Resolver()
 export class UserResolver {
@@ -16,6 +17,14 @@ export class UserResolver {
     user: UserDto,
   ): Promise<UserEntity> {
     return this.userService.create(user);
+  }
+
+  @Mutation(() => UserEntity)
+  update(
+    @Args('user')
+    user: UpdateUserDto,
+  ): Promise<UserEntity> {
+    return this.userService.update(user.id, user);
   }
 
   @Query(() => UserEntity)
