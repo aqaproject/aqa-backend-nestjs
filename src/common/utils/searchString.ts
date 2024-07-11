@@ -2,7 +2,7 @@ import { FilterArgs } from '../args/filter.arg';
 
 export function searchString(
   table: string,
-  filter: FilterArgs,
+  filter?: FilterArgs,
   matchCase = false,
   matchWholeWord = false,
 ) {

@@ -11,6 +11,11 @@ import { UserService } from './user.service';
 export class UserResolver {
   constructor(private readonly userService: UserService) {}
 
+  @Query(() => [UserEntity], { name: 'users' })
+  findAll(@Args('name', { nullable: true }) name?: string) {
+    return this.userService.findAll(name);
+  }
+
   @Mutation(() => UserEntity)
   register(
     @Args('user')

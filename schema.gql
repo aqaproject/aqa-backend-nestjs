@@ -199,6 +199,7 @@ type Query {
   semesters: [Semester!]
   subject(id: String!): Subject
   subjects(filter: FilterArgs = {}, pagination: PaginationArgs = {page: 0, size: 10}, sort: SortArgs = {}): PaginatedSubject!
+  users(name: String): [UserEntity!]!
 }
 
 enum Role {

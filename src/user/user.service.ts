@@ -1,6 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import * as bcrypt from 'bcrypt';
+import { searchString } from 'src/common/utils/searchString';
 import { Repository } from 'typeorm';
 import { UserDto } from './dto/user.dto';
 import { UserEntity } from './entities/user.entity';
@@ -18,6 +19,24 @@ export class UserService {
 
   async findByUsername(username: string) {
     return this.userRepo.findOneBy({ username });
+  }
+
+  async findAll(name?: string) {
+    return this.userRepo
+      .createQueryBuilder('User')
+      .where(
+        name
+          ? `unaccent(User.displayName) ilike ('%' || unaccent(:keyword) || '%')`
+          : '',
+        { keyword: name || '' },
+      )
+      .orWhere(
+        name
+          ? `unaccent(User.username) ilike ('%' || unaccent(:keyword) || '%')`
+          : '',
+        { keyword: name || '' },
+      )
+      .getMany();
   }
 
   async findById(id: string) {
