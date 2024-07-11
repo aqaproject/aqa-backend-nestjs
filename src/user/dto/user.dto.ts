@@ -12,6 +12,9 @@ export class UserDto {
   @Field(() => String)
   username: string;
 
+  @Field(() => String, { nullable: true })
+  facultyId: string;
+
   @Field(() => String)
   password: string;
 }

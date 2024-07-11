@@ -205,6 +205,7 @@ type Query {
 enum Role {
   ADMIN
   FACULTY
+  FULL_ACCESS
   LECTURER
 }
 
@@ -236,7 +237,9 @@ type Subject {
 
 input UpdateUserDto {
   displayName: String = ""
+  facultyId: String
   id: String!
+  lastAccess: DateTime!
   password: String!
   role: Role!
   username: String!
@@ -244,6 +247,7 @@ input UpdateUserDto {
 
 input UserDto {
   displayName: String = ""
+  facultyId: String
   password: String!
   role: Role!
   username: String!
@@ -252,6 +256,7 @@ input UserDto {
 type UserEntity {
   displayName: String!
   id: String!
+  lastAccess: DateTime
   password: String!
   role: Role!
   username: String!

@@ -1,5 +1,6 @@
 import { Field, ObjectType } from '@nestjs/graphql';
-import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import { Faculty } from 'src/faculty/entities/faculty.entity';
+import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
 import { Role } from '../enums/role.enum';
 
 @ObjectType()
@@ -21,7 +22,14 @@ export class UserEntity {
   @Column()
   username: string;
 
+  @ManyToOne(() => Faculty, { nullable: true })
+  faculty?: Faculty;
+
   @Field(() => String)
   @Column()
   password: string;
+
+  @Field(() => Date, { nullable: true })
+  @Column({ type: 'timestamp with time zone', nullable: true })
+  lastAccess: Date;
 }

@@ -1,8 +1,8 @@
-import { Injectable } from '@nestjs/common';
+import { ConflictException, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import * as bcrypt from 'bcrypt';
-import { searchString } from 'src/common/utils/searchString';
 import { Repository } from 'typeorm';
+import { UpdateUserDto } from './dto/update-user.dto';
 import { UserDto } from './dto/user.dto';
 import { UserEntity } from './entities/user.entity';
 
@@ -13,8 +13,14 @@ export class UserService {
   ) {}
 
   async create(user: UserDto): Promise<UserEntity> {
+    if (await this.userRepo.findOneBy({ username: user.username })) {
+      throw new ConflictException('Conflict');
+    }
     user.password = await bcrypt.hash(user.password, 0);
-    return this.userRepo.save(user);
+    return this.userRepo.save({
+      ...user,
+      faculty: { faculty_id: user.facultyId },
+    });
   }
 
   async findByUsername(username: string) {
@@ -43,7 +49,7 @@ export class UserService {
     return this.userRepo.findOneBy({ id });
   }
 
-  async update(id: string, userDto: UserDto): Promise<UserEntity> {
+  async update(id: string, userDto: UpdateUserDto): Promise<UserEntity> {
     const user = await this.userRepo.findOneBy({ id });
 
     Object.assign(user, userDto);
@@ -51,6 +57,9 @@ export class UserService {
       user.password = await bcrypt.hash(userDto.password, 0);
     }
 
-    return this.userRepo.save(user);
+    return this.userRepo.save({
+      ...user,
+      faculty: { faculty_id: userDto.facultyId },
+    });
   }
 }
