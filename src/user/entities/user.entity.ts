@@ -2,6 +2,7 @@ import { Field, ObjectType } from '@nestjs/graphql';
 import { Faculty } from 'src/faculty/entities/faculty.entity';
 import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
 import { Role } from '../enums/role.enum';
+import { Lecturer } from 'src/lecturer/entities/lecturer.entity';
 
 @ObjectType()
 @Entity()
@@ -24,6 +25,9 @@ export class UserEntity {
 
   @ManyToOne(() => Faculty, { nullable: true })
   faculty?: Faculty;
+
+  @ManyToOne(() => Lecturer, { nullable: true })
+  lecturer?: Lecturer;
 
   @Field(() => String)
   @Column()

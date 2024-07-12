@@ -59,4 +59,9 @@ export class UserResolver {
   faculty(@Parent() user: UserEntity) {
     return user.faculty;
   }
+
+  @ResolveField(() => Faculty, { nullable: true })
+  lecturer(@Parent() user: UserEntity) {
+    return user.faculty;
+  }
 }

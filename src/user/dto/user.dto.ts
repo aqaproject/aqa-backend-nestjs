@@ -15,6 +15,9 @@ export class UserDto {
   @Field(() => String, { nullable: true })
   facultyId: string;
 
+  @Field(() => String, { nullable: true })
+  lecturerId?: string;
+
   @Field(() => String)
   password: string;
 }

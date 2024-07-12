@@ -241,6 +241,7 @@ input UpdateUserDto {
   facultyId: String
   id: String!
   lastAccess: DateTime
+  lecturerId: String
   password: String
   role: Role
   username: String
@@ -249,6 +250,7 @@ input UpdateUserDto {
 input UserDto {
   displayName: String = ""
   facultyId: String
+  lecturerId: String
   password: String!
   role: Role!
   username: String!
@@ -259,6 +261,7 @@ type UserEntity {
   faculty: Faculty
   id: String!
   lastAccess: DateTime
+  lecturer: Faculty
   password: String!
   role: Role!
   username: String!

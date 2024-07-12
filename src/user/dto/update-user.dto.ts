@@ -19,6 +19,9 @@ export class UpdateUserDto {
   facultyId?: string;
 
   @Field(() => String, { nullable: true })
+  lecturerId?: string;
+
+  @Field(() => String, { nullable: true })
   password?: string;
 
   @Field(() => Date, { nullable: true })

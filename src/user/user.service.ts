@@ -24,13 +24,18 @@ export class UserService {
             faculty: { faculty_id: user.facultyId || undefined },
           }
         : {}),
+      ...(user.lecturerId
+        ? {
+            lecturer: { lecturer_id: user.lecturerId || undefined },
+          }
+        : {}),
     });
   }
 
   async findByUsername(username: string) {
     return this.userRepo.findOne({
       where: { username },
-      relations: { faculty: true },
+      relations: { faculty: true, lecturer: true },
     });
   }
 
@@ -38,6 +43,7 @@ export class UserService {
     return this.userRepo
       .createQueryBuilder('User')
       .leftJoinAndSelect('User.faculty', 'Faculty')
+      .leftJoinAndSelect('User.lecturer', 'Lecturer')
       .where(
         name
           ? `unaccent(User.displayName) ilike ('%' || unaccent(:keyword) || '%')`
@@ -56,7 +62,7 @@ export class UserService {
   async findById(id: string) {
     return this.userRepo.findOne({
       where: { id },
-      relations: { faculty: true },
+      relations: { faculty: true, lecturer: true },
     });
   }
 
@@ -73,6 +79,11 @@ export class UserService {
       ...(userDto.facultyId
         ? {
             faculty: { faculty_id: userDto.facultyId || undefined },
+          }
+        : {}),
+      ...(userDto.lecturerId
+        ? {
+            lecturer: { lecturer_id: userDto.lecturerId || undefined },
           }
         : {}),
     });
