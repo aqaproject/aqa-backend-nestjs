@@ -14,6 +14,7 @@ import { UpdateUserDto } from './dto/update-user.dto';
 import { UserDto } from './dto/user.dto';
 import { UserEntity } from './entities/user.entity';
 import { UserService } from './user.service';
+import { Lecturer } from 'src/lecturer/entities/lecturer.entity';
 
 @Resolver(() => UserEntity)
 export class UserResolver {
@@ -60,8 +61,8 @@ export class UserResolver {
     return user.faculty;
   }
 
-  @ResolveField(() => Faculty, { nullable: true })
+  @ResolveField(() => Lecturer, { nullable: true })
   lecturer(@Parent() user: UserEntity) {
-    return user.faculty;
+    return user.lecturer;
   }
 }

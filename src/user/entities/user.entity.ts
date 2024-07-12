@@ -33,7 +33,11 @@ export class UserEntity {
   @Column()
   password: string;
 
-  @Field(() => Date, { nullable: true })
-  @Column({ type: 'timestamp with time zone', nullable: true })
+  @Field(() => Date, { nullable: true, defaultValue: new Date() })
+  @Column({
+    type: 'timestamp with time zone',
+    nullable: true,
+    default: new Date(),
+  })
   lastAccess: Date;
 }
