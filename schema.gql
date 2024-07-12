@@ -104,8 +104,9 @@ type Lecturer {
 
 type Mutation {
   login(password: String!, username: String!): AuthDto!
-  register(user: UserDto!): UserEntity!
-  update(user: UpdateUserDto!): UserEntity!
+  registerUser(user: UserDto!): UserEntity!
+  removeUser(id: String!): Boolean!
+  updateUser(user: UpdateUserDto!): UserEntity!
 }
 
 type PaginatedClass {

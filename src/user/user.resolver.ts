@@ -8,12 +8,12 @@ import {
   Resolver,
 } from '@nestjs/graphql';
 import { JwtAuthGuard } from 'src/auth/guards/jwt-auth.guard';
+import { Faculty } from 'src/faculty/entities/faculty.entity';
 import { CurrentUser } from './decorator/user.decorator';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { UserDto } from './dto/user.dto';
 import { UserEntity } from './entities/user.entity';
 import { UserService } from './user.service';
-import { Faculty } from 'src/faculty/entities/faculty.entity';
 
 @Resolver(() => UserEntity)
 export class UserResolver {
@@ -25,7 +25,7 @@ export class UserResolver {
   }
 
   @Mutation(() => UserEntity)
-  register(
+  registerUser(
     @Args('user')
     user: UserDto,
   ): Promise<UserEntity> {
@@ -33,11 +33,20 @@ export class UserResolver {
   }
 
   @Mutation(() => UserEntity)
-  update(
+  updateUser(
     @Args('user')
     user: UpdateUserDto,
   ): Promise<UserEntity> {
     return this.userService.update(user.id, user);
+  }
+
+  @Mutation(() => Boolean)
+  async removeUser(
+    @Args('id')
+    id: string,
+  ): Promise<any> {
+    await this.userService.remove(id);
+    return true;
   }
 
   @Query(() => UserEntity)

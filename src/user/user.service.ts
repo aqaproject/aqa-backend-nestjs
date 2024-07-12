@@ -77,4 +77,8 @@ export class UserService {
         : {}),
     });
   }
+
+  remove(id: string) {
+    return this.userRepo.delete({ id });
+  }
 }
