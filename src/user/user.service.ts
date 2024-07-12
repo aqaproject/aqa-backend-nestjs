@@ -19,17 +19,25 @@ export class UserService {
     user.password = await bcrypt.hash(user.password, 0);
     return this.userRepo.save({
       ...user,
-      faculty: { faculty_id: user.facultyId },
+      ...(user.facultyId
+        ? {
+            faculty: { faculty_id: user.facultyId || undefined },
+          }
+        : {}),
     });
   }
 
   async findByUsername(username: string) {
-    return this.userRepo.findOneBy({ username });
+    return this.userRepo.findOne({
+      where: { username },
+      relations: { faculty: true },
+    });
   }
 
   async findAll(name?: string) {
     return this.userRepo
       .createQueryBuilder('User')
+      .leftJoinAndSelect('User.faculty', 'Faculty')
       .where(
         name
           ? `unaccent(User.displayName) ilike ('%' || unaccent(:keyword) || '%')`
@@ -46,7 +54,10 @@ export class UserService {
   }
 
   async findById(id: string) {
-    return this.userRepo.findOneBy({ id });
+    return this.userRepo.findOne({
+      where: { id },
+      relations: { faculty: true },
+    });
   }
 
   async update(id: string, userDto: UpdateUserDto): Promise<UserEntity> {
@@ -59,7 +70,11 @@ export class UserService {
 
     return this.userRepo.save({
       ...user,
-      faculty: { faculty_id: userDto.facultyId },
+      ...(userDto.facultyId
+        ? {
+            faculty: { faculty_id: userDto.facultyId || undefined },
+          }
+        : {}),
     });
   }
 }

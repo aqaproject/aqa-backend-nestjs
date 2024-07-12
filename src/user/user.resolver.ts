@@ -1,13 +1,21 @@
 import { UseGuards } from '@nestjs/common';
-import { Args, Mutation, Query, Resolver } from '@nestjs/graphql';
+import {
+  Args,
+  Mutation,
+  Parent,
+  Query,
+  ResolveField,
+  Resolver,
+} from '@nestjs/graphql';
 import { JwtAuthGuard } from 'src/auth/guards/jwt-auth.guard';
 import { CurrentUser } from './decorator/user.decorator';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { UserDto } from './dto/user.dto';
 import { UserEntity } from './entities/user.entity';
 import { UserService } from './user.service';
+import { Faculty } from 'src/faculty/entities/faculty.entity';
 
-@Resolver()
+@Resolver(() => UserEntity)
 export class UserResolver {
   constructor(private readonly userService: UserService) {}
 
@@ -36,5 +44,10 @@ export class UserResolver {
   @UseGuards(JwtAuthGuard)
   profile(@CurrentUser() user: UserEntity) {
     return user;
+  }
+
+  @ResolveField(() => Faculty, { nullable: true })
+  faculty(@Parent() user: UserEntity) {
+    return user.faculty;
   }
 }

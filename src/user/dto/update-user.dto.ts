@@ -6,21 +6,21 @@ export class UpdateUserDto {
   @Field(() => String, { nullable: false })
   id?: string;
 
-  @Field(() => Role)
+  @Field(() => Role, { nullable: true })
   role?: Role;
 
   @Field(() => String, { nullable: true, defaultValue: '' })
   displayName?: string;
 
-  @Field(() => String)
+  @Field(() => String, { nullable: true })
   username?: string;
 
   @Field(() => String, { nullable: true })
   facultyId?: string;
 
-  @Field(() => String)
+  @Field(() => String, { nullable: true })
   password?: string;
 
-  @Field(() => Date)
-  lastAccess: Date;
+  @Field(() => Date, { nullable: true })
+  lastAccess?: Date;
 }

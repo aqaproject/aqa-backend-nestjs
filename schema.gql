@@ -239,10 +239,10 @@ input UpdateUserDto {
   displayName: String = ""
   facultyId: String
   id: String!
-  lastAccess: DateTime!
-  password: String!
-  role: Role!
-  username: String!
+  lastAccess: DateTime
+  password: String
+  role: Role
+  username: String
 }
 
 input UserDto {
@@ -255,6 +255,7 @@ input UserDto {
 
 type UserEntity {
   displayName: String!
+  faculty: Faculty
   id: String!
   lastAccess: DateTime
   password: String!
