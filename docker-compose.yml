@@ -13,8 +13,12 @@ services:
     networks:
       - postgresql
 
+  classifier:
+    image: hoanghy/aqa-classifier
+    networks:
+      - postgresql
+
   web:
-    # build: .
     image: hoanghy/aqa-backend
     restart: always
     ports:
