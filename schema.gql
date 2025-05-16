@@ -227,6 +227,25 @@ input SortFieldArgs {
   type: String! = "name"
 }
 
+type StaffSurveyCriteria {
+  category: String!
+  display_name: String!
+  index: Int
+  staff_survery_criteria_id: String!
+}
+
+type StaffSurveySheet {
+  academic_degree: String
+  academic_title: String
+  additional_comment: String
+  birth: String
+  display_name: String
+  faculty: Boolean
+  gender: Boolean
+  mscb: String
+  staff_survey_sheet_id: String!
+}
+
 type Subject {
   display_name: String
   faculty: Faculty

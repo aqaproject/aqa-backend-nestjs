@@ -20,6 +20,7 @@ import { SubjectModule } from './subject/subject.module';
 import { UserModule } from './user/user.module';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { MailModule } from './mail/mail.module';
+import { StaffSurveyModule } from './staff-survey/staff-survey.module';
 
 @Module({
   imports: [
@@ -59,6 +60,7 @@ import { MailModule } from './mail/mail.module';
     CommentModule,
     PointModule,
     MailModule,
+    StaffSurveyModule,
   ],
   controllers: [AppController],
   providers: [AppService],

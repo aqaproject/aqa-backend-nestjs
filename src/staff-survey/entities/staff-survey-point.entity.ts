@@ -1,0 +1,34 @@
+import { Field, Int, ObjectType } from '@nestjs/graphql';
+import { Column, Entity, JoinColumn, ManyToOne, PrimaryColumn } from 'typeorm';
+import { StaffSurveyCriteria } from './staff-survey-criteria.entity';
+import { StaffSurveySheet } from './staff-survey-sheet.entity';
+
+@ObjectType()
+@Entity()
+export class StaffSurveyPoint {
+  @Field()
+  @PrimaryColumn()
+  staff_survery_point_id: string;
+
+  @Column({ type: 'int' })
+  @Field(() => Int)
+  max_point: number;
+
+  @Column({ type: 'int' })
+  @Field(() => Int)
+  point: number;
+
+  @Column({ nullable: true })
+  @Field({ nullable: true })
+  comment: string;
+
+  @ManyToOne(() => StaffSurveyCriteria)
+  @JoinColumn({ name: 'staff_survery_criteria_id' })
+  @Field(() => StaffSurveyCriteria, { nullable: true })
+  criteria: StaffSurveyCriteria;
+
+  @ManyToOne(() => StaffSurveySheet)
+  @JoinColumn({ name: 'staff_survey_sheet_id' })
+  @Field(() => StaffSurveySheet, { nullable: true })
+  sheet: StaffSurveySheet;
+}
