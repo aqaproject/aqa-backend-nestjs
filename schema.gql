@@ -103,6 +103,8 @@ type Lecturer {
 }
 
 type Mutation {
+  """Add new staff survey data"""
+  addNewStaffSurveyData(academic_degree: String, academic_title: String, additional_comment: String, birth: String, display_name: String, faculty: Boolean, gender: Boolean, mscb: String, points: [StaffSurveyPointDTO!]!, survey_name: String): StaffSurveySheet!
   login(password: String!, username: String!): AuthDto!
   registerUser(user: UserDto!): UserEntity!
   removeUser(id: String!): Boolean!
@@ -227,6 +229,12 @@ input SortFieldArgs {
   type: String! = "name"
 }
 
+type StaffSurveyBatch {
+  display_name: String
+  staff_survey_batch_id: String!
+  updated_at: DateTime
+}
+
 type StaffSurveyCriteria {
   category: String!
   display_name: String!
@@ -234,10 +242,20 @@ type StaffSurveyCriteria {
   staff_survery_criteria_id: String!
 }
 
+input StaffSurveyPointDTO {
+  comment: String
+  criteria_category: String
+  criteria_index: Int
+  criteria_name: String
+  max_point: Int!
+  point: Int!
+}
+
 type StaffSurveySheet {
   academic_degree: String
   academic_title: String
   additional_comment: String
+  batch: StaffSurveyBatch
   birth: String
   display_name: String
   faculty: Boolean

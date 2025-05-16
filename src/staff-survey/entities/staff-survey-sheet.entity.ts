@@ -1,11 +1,12 @@
 import { Field, ObjectType } from '@nestjs/graphql';
-import { Column, Entity, PrimaryColumn } from 'typeorm';
+import { Column, Entity, JoinColumn, ManyToOne, PrimaryColumn } from 'typeorm';
+import { StaffSurveyBatch } from './staff-survey-batch.entity';
 
 @ObjectType()
 @Entity()
 export class StaffSurveySheet {
   @Field()
-  @PrimaryColumn()
+  @PrimaryColumn('uuid', { default: () => 'uuid_generate_v4()' })
   staff_survey_sheet_id: string;
 
   @Field({ nullable: true })
@@ -39,4 +40,9 @@ export class StaffSurveySheet {
   @Field({ nullable: true })
   @Column({ nullable: true })
   additional_comment: string;
+
+  @ManyToOne(() => StaffSurveyBatch)
+  @JoinColumn({ name: 'staff_survey_batch_id' })
+  @Field(() => StaffSurveyBatch, { nullable: true })
+  batch: StaffSurveyBatch;
 }

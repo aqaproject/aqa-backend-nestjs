@@ -7,7 +7,7 @@ import { StaffSurveySheet } from './staff-survey-sheet.entity';
 @Entity()
 export class StaffSurveyPoint {
   @Field()
-  @PrimaryColumn()
+  @PrimaryColumn('uuid', { default: () => 'uuid_generate_v4()' })
   staff_survery_point_id: string;
 
   @Column({ type: 'int' })
@@ -22,12 +22,12 @@ export class StaffSurveyPoint {
   @Field({ nullable: true })
   comment: string;
 
-  @ManyToOne(() => StaffSurveyCriteria)
+  @ManyToOne(() => StaffSurveyCriteria, { cascade: false })
   @JoinColumn({ name: 'staff_survery_criteria_id' })
   @Field(() => StaffSurveyCriteria, { nullable: true })
   criteria: StaffSurveyCriteria;
 
-  @ManyToOne(() => StaffSurveySheet)
+  @ManyToOne(() => StaffSurveySheet, { cascade: false })
   @JoinColumn({ name: 'staff_survey_sheet_id' })
   @Field(() => StaffSurveySheet, { nullable: true })
   sheet: StaffSurveySheet;
