@@ -189,6 +189,7 @@ type Query {
 
   """Get detail information of a faculty and its lecturer list"""
   faculty(id: String!): Faculty
+  getCriteriaList: [StaffSurveyCriteria!]!
 
   """List all points, group by a specific entity"""
   groupedPoints(class_id: String, class_type: String, criteria_id: String, faculty_id: String, groupEntity: String = "Subject", keyword: String = "", lecturer_id: String, page: Int = 0, program: String, semester_id: String, size: Int = 10, subjects: [String!]): PaginatedGroupedPoint!
@@ -242,6 +243,7 @@ type StaffSurveyCriteria {
   category: String!
   display_name: String!
   index: Int
+  semesters: [String!]!
   staff_survery_criteria_id: String!
 }
 
@@ -277,6 +279,7 @@ input StaffSurveySheetDTO {
   gender: Boolean
   mscb: String
   points: [StaffSurveyPointDTO!]!
+  semester: String
   survey_name: String
 }
 

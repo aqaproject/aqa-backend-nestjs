@@ -1,7 +1,8 @@
-import { Args, Mutation, Resolver } from '@nestjs/graphql';
+import { Args, Mutation, Query, Resolver } from '@nestjs/graphql';
 import { StaffSurveySheet } from './entities/staff-survey-sheet.entity';
 import { StaffSurveyService } from './staff-survey.service';
 import { StaffSurveySheetDTO } from './dtos/staff-survey-sheet.dto';
+import { StaffSurveyCriteria } from './entities/staff-survey-criteria.entity';
 
 @Resolver(() => StaffSurveySheet)
 export class StaffSurveyResolver {
@@ -29,5 +30,10 @@ export class StaffSurveyResolver {
     return await Promise.all(
       data.map((item) => this.staffSurveyService.create(item)),
     );
+  }
+
+  @Query(() => [StaffSurveyCriteria])
+  async getCriteriaList() {
+    return await this.staffSurveyService.getCriteriaList();
   }
 }

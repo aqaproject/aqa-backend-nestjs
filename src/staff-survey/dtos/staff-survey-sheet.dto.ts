@@ -32,6 +32,9 @@ export class StaffSurveySheetDTO {
   @Field({ nullable: true })
   additional_comment: string;
 
+  @Field({ nullable: true })
+  semester: string;
+
   @Field(() => [StaffSurveyPointDTO], { nullable: false })
   points: StaffSurveyPointDTO[];
 }

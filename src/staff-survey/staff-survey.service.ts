@@ -38,7 +38,10 @@ export class StaffSurveyService {
     await Promise.all(
       points.map(async (_point) => {
         const point = { ..._point };
-        const criteria = await this.getCriteria(point);
+        const criteria = await this.getCriteria({
+          ...point,
+          semester: inputData.semester,
+        });
 
         return await this.staffSurveyPointRepo.insert({
           ...point,
@@ -53,14 +56,20 @@ export class StaffSurveyService {
     return surveySheet;
   }
 
+  async getCriteriaList() {
+    return await this.staffSurveyCriteriaRepo.find({});
+  }
+
   async getCriteria({
     criteria_name,
     criteria_category,
     criteria_index,
+    semester,
   }: {
     criteria_name: string;
     criteria_category: string;
     criteria_index: number;
+    semester?: string;
   }) {
     let criteria = await this.staffSurveyCriteriaRepo.findOne({
       where: {
@@ -74,6 +83,7 @@ export class StaffSurveyService {
         display_name: criteria_name,
         category: criteria_category,
         index: criteria_index,
+        semesters: semester ? [semester] : [],
       });
 
       try {
@@ -86,6 +96,30 @@ export class StaffSurveyService {
             category: criteria_category,
           },
         });
+      }
+    } else {
+      if (semester) {
+        try {
+          await this.staffSurveyCriteriaRepo.update(
+            {
+              staff_survery_criteria_id: criteria.staff_survery_criteria_id,
+            },
+            {
+              semesters: Array.from(
+                new Set([...(criteria.semesters ?? []), semester]),
+              ),
+            },
+          );
+
+          criteria = await this.staffSurveyCriteriaRepo.findOne({
+            where: {
+              display_name: criteria_name,
+              category: criteria_category,
+            },
+          });
+        } catch (error) {
+          console.error('Error updating criteria:', error);
+        }
       }
     }
 
