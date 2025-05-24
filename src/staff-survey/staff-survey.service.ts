@@ -78,7 +78,6 @@ export class StaffSurveyService {
 
       try {
         criteria = await this.staffSurveyCriteriaRepo.save(criteriaData);
-        console.log({ criteria });
       } catch (error) {
         console.error('Error saving criteria:', error);
         return await this.staffSurveyCriteriaRepo.findOne({
