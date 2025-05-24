@@ -62,7 +62,7 @@ export class StaffSurveyService {
     criteria_category: string;
     criteria_index: number;
   }) {
-    const criteria = await this.staffSurveyCriteriaRepo.findOne({
+    let criteria = await this.staffSurveyCriteriaRepo.findOne({
       where: {
         display_name: criteria_name,
         category: criteria_category,
@@ -70,11 +70,24 @@ export class StaffSurveyService {
     });
 
     if (!criteria) {
-      return await this.staffSurveyCriteriaRepo.save({
+      const criteriaData = this.staffSurveyCriteriaRepo.create({
         display_name: criteria_name,
         category: criteria_category,
         index: criteria_index,
       });
+
+      try {
+        criteria = await this.staffSurveyCriteriaRepo.save(criteriaData);
+        console.log({ criteria });
+      } catch (error) {
+        console.error('Error saving criteria:', error);
+        return await this.staffSurveyCriteriaRepo.findOne({
+          where: {
+            display_name: criteria_name,
+            category: criteria_category,
+          },
+        });
+      }
     }
 
     return criteria;
@@ -96,7 +109,15 @@ export class StaffSurveyService {
         display_name: batchName,
         updated_at: new Date(),
       });
-      batch = await this.staffSurveyBatchRepo.save(batchData);
+      try {
+        batch = await this.staffSurveyBatchRepo.save(batchData);
+      } catch (error) {
+        return await this.staffSurveyBatchRepo.findOne({
+          where: {
+            display_name: batchName,
+          },
+        });
+      }
     }
 
     return batch;

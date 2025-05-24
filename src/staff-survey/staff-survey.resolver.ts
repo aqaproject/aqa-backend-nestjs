@@ -11,7 +11,23 @@ export class StaffSurveyResolver {
     name: 'addNewStaffSurveyData',
     description: 'Add new staff survey data',
   })
-  async create(@Args() data: StaffSurveySheetDTO) {
+  async create(
+    @Args('data', { type: () => StaffSurveySheetDTO })
+    data: StaffSurveySheetDTO,
+  ) {
     return await this.staffSurveyService.create(data);
+  }
+
+  @Mutation(() => [StaffSurveySheet], {
+    name: 'addListStaffSurveyData',
+    description: 'Add new staff survey data',
+  })
+  async createList(
+    @Args('data', { type: () => [StaffSurveySheetDTO] })
+    data: StaffSurveySheetDTO[],
+  ) {
+    return await Promise.all(
+      data.map((item) => this.staffSurveyService.create(item)),
+    );
   }
 }

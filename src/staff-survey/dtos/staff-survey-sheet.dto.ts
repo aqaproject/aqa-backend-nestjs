@@ -1,7 +1,7 @@
-import { ArgsType, Field } from '@nestjs/graphql';
+import { Field, InputType } from '@nestjs/graphql';
 import { StaffSurveyPointDTO } from './staff-survey-point.dto';
 
-@ArgsType()
+@InputType()
 export class StaffSurveySheetDTO {
   @Field({
     nullable: true,
@@ -21,7 +21,7 @@ export class StaffSurveySheetDTO {
   gender: boolean;
 
   @Field({ nullable: true })
-  faculty: boolean;
+  faculty: string;
 
   @Field({ nullable: true })
   academic_degree: string;

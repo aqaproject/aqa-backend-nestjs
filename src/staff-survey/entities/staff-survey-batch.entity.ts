@@ -9,7 +9,7 @@ export class StaffSurveyBatch {
   staff_survey_batch_id: string;
 
   @Field({ nullable: true })
-  @Column({ nullable: true })
+  @Column({ nullable: true, unique: true })
   display_name: string;
 
   @Field(() => Date, { nullable: true })

@@ -26,8 +26,8 @@ export class StaffSurveySheet {
   gender: boolean;
 
   @Field({ nullable: true })
-  @Column({ nullable: true, type: 'boolean' })
-  faculty: boolean;
+  @Column({ nullable: true })
+  faculty: string;
 
   @Field({ nullable: true })
   @Column({ nullable: true })
